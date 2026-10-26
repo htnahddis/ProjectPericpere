@@ -3,12 +3,11 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Dashboard from "@/components/Dashboard";
-import VideoSection from "@/components/VideoSection";
 import ProductPreview from "@/components/ProductPreview";
 import Reveal from "@/components/Reveal";
 import TextReveal from "@/components/TextReveal";
 import StatementReveal from "@/components/StatementReveal";
-import { JOURNEY, PRODUCTS, DEMO_HREF } from "@/lib/data";
+import { PRODUCTS, DEMO_HREF } from "@/lib/data";
 
 export default function Home() {
   return (
@@ -25,23 +24,19 @@ export default function Home() {
             { text: "Intelligence Across" },
             { text: "Your SAP Journey.", accent: "Journey." },
           ]} />
-          <p className="lede">AI solutions for implementation, operations and support—grounded in enterprise context.</p>
-          <div className="ctas">
+          <p className="lede hero-support">AI solutions for implementation, operations and support—grounded in enterprise context.</p>
+          <div className="ctas hero-actions">
             <Link href="/products" prefetch={false} className="btn btn-dark">Explore our AI</Link>
             <Link href={DEMO_HREF} prefetch={false} className="btn btn-line">Talk to our team</Link>
           </div>
         </section>
 
-        <div className="journey wrap" aria-label="SAP landscape coverage">
-          <ul>{JOURNEY.map(j => <li key={j}>{j}</li>)}</ul>
-        </div>
-
-        <div className="wrap hero-dash"><Dashboard /></div>
-
-        <VideoSection />
+        <Reveal className="wrap hero-dash"><Dashboard /></Reveal>
 
         <section className="wrap" id="capabilities">
-          <div className="row-head"><TextReveal as="h2" className="h2" lines={[{ text: "Capabilities" }]} /><Link href="/products" prefetch={false} className="ulink">View all products ↗</Link></div>
+          <Reveal>
+            <div className="row-head"><TextReveal as="h2" className="h2" lines={[{ text: "Capabilities" }]} /><Link href="/products" prefetch={false} className="ulink">View all products ↗</Link></div>
+          </Reveal>
           <div className="grid">
             {PRODUCTS.map((p, i) => (
               <Reveal key={p.name} delay={(i % 3) * 80}>
@@ -57,7 +52,9 @@ export default function Home() {
         </section>
 
         <section className="wrap split">
-          <div className="split-img"><Image src="/images/workflow.svg" alt="PerciServe interface on a monitor" fill sizes="(max-width:900px) 100vw, 50vw" /></div>
+          <Reveal className="split-visual">
+            <div className="split-img"><Image src="/images/workflow.svg" alt="PerciServe interface on a monitor" fill sizes="(max-width:900px) 100vw, 50vw" /></div>
+          </Reveal>
           <Reveal>
             <p className="eyebrow left">PerciServe in action</p>
             <TextReveal as="h2" className="h2" lines={[{ text: "From query to resolution—without losing context." }]} />
@@ -74,15 +71,17 @@ export default function Home() {
         </section>
 
         <section className="wrap final">
-          <TextReveal as="h2" className="h1 sm" lines={[
-            { text: "Built for Real", accent: "Real" },
-            { text: "Enterprise Challenges" },
-          ]} />
-          <p className="lede">Explore how Percipere brings AI and SAP expertise together.</p>
-          <div className="ctas">
-            <Link href={DEMO_HREF} prefetch={false} className="btn btn-dark">Talk to our team</Link>
-            <Link href="/products" prefetch={false} className="btn btn-line">Our products</Link>
-          </div>
+          <Reveal>
+            <TextReveal as="h2" className="h1 sm" lines={[
+              { text: "Built for Real", accent: "Real" },
+              { text: "Enterprise Challenges" },
+            ]} />
+            <p className="lede">Explore how Percipere brings AI and SAP expertise together.</p>
+            <div className="ctas">
+              <Link href={DEMO_HREF} prefetch={false} className="btn btn-dark">Talk to our team</Link>
+              <Link href="/products" prefetch={false} className="btn btn-line">Our products</Link>
+            </div>
+          </Reveal>
         </section>
       </main>
       <Footer />

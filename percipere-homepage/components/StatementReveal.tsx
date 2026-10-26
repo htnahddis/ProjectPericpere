@@ -18,22 +18,28 @@ export default function StatementReveal() {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const updateMotionPreference = () => setReduceMotion(motionQuery.matches);
     updateMotionPreference();
-    motionQuery.addEventListener("change", updateMotionPreference);
+    motionQuery.addEventListener?.("change", updateMotionPreference);
 
     const element = ref.current;
     if (!element || !("IntersectionObserver" in window)) {
       setActive(true);
-      return () => motionQuery.removeEventListener("change", updateMotionPreference);
+      return () => motionQuery.removeEventListener?.("change", updateMotionPreference);
     }
 
-    const observer = new IntersectionObserver(([entry]) => {
-      setActive(entry.isIntersecting);
-    }, { threshold: 0.2 });
-    observer.observe(element);
+    let observer: IntersectionObserver;
+    try {
+      observer = new IntersectionObserver(([entry]) => {
+        setActive(entry.isIntersecting);
+      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.01 });
+      observer.observe(element);
+    } catch {
+      setActive(true);
+      return () => motionQuery.removeEventListener?.("change", updateMotionPreference);
+    }
 
     return () => {
       observer.disconnect();
-      motionQuery.removeEventListener("change", updateMotionPreference);
+      motionQuery.removeEventListener?.("change", updateMotionPreference);
     };
   }, []);
 

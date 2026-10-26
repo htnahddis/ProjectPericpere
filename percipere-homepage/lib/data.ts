@@ -19,9 +19,6 @@ export const NAV = [
   ]},
 ];
 
-// TODO: verify against the Figma strip; labels were read from a low-res screenshot.
-export const JOURNEY = ["SAP ECC","SAP Fiori","SAP S/4HANA","SuccessFactors","SAP BTP","BW/4HANA","SAC","SAP BRIM","Concur"];
-
 export const PRODUCTS = [
   { name: "PerciXpert", tag: "Implementation intelligence · 2 min demo", href: "/products/percixpert",
     img: "/images/percixpert.svg", video: "/media/products/percixpert.mp4", poster: "/images/products/percixpert.jpg", desc: "Investigate dumps, transports and config drift with AI that knows your landscape." },

@@ -16,34 +16,50 @@ export default function TextReveal({
   trigger?: boolean;
 }) {
   const ref = useRef<HTMLElement>(null);
+  const [ready, setReady] = useState(false);
   const [seen, setSeen] = useState(false);
 
   useEffect(() => {
-    if (trigger !== undefined) return;
+    if (trigger !== undefined) {
+      setReady(true);
+      return;
+    }
     const element = ref.current;
     if (!element) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+      setReady(true);
       setSeen(true);
       return;
     }
 
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setSeen(true);
-        observer.disconnect();
-      }
-    }, { threshold: 0.2 });
-    observer.observe(element);
+    let observer: IntersectionObserver;
+    try {
+      observer = new IntersectionObserver(([entry]) => {
+        setReady(true);
+        if (entry.isIntersecting) {
+          setSeen(true);
+          observer.disconnect();
+        }
+      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.01 });
+      observer.observe(element);
+    } catch {
+      setReady(true);
+      setSeen(true);
+      return;
+    }
+
     return () => observer.disconnect();
   }, [trigger]);
 
   let wordIndex = 0;
   const label = lines.map(line => line.text).join(" ");
+  const active = trigger ?? seen;
+  const stateClass = ready ? (active ? "in" : "pending") : "";
 
   return (
     <Tag
       ref={element => { ref.current = element; }}
-      className={`text-reveal ${trigger ?? seen ? "in" : ""} ${className}`}
+      className={`text-reveal ${stateClass} ${className}`}
       aria-label={label}
     >
       {lines.map((line, lineIndex) => {

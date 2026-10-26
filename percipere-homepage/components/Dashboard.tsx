@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const TABS = ["PerciServe", "PerciXpert", "PerciHub"];
 const LOG = [
@@ -9,8 +9,36 @@ const LOG = [
 
 export default function Dashboard() {
   const [tab, setTab] = useState("PerciXpert");
+  const [entered, setEntered] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+      setEntered(true);
+      return;
+    }
+
+    let observer: IntersectionObserver;
+    try {
+      observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          setEntered(true);
+          observer.disconnect();
+        }
+      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.01 });
+      observer.observe(element);
+    } catch {
+      setEntered(true);
+      return;
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="dash">
+    <div ref={ref} className={`dash ${entered ? "in" : "pending"}`}>
       <span className="float f1">24/7 auto-resolve</span>
       <span className="float f2">Root cause found</span>
       <div className="dash-tabs" role="tablist" aria-label="Product views">

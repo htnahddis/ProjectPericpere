@@ -17,10 +17,12 @@ To check a production build, run `npm run build`.
 - `app/page.tsx` — homepage sections
 - `app/layout.tsx` — root layout and metadata
 - `app/globals.css` — design system and responsive styling
-- `components/` — navigation, dashboard, video, reveal animations, footer
-- `lib/data.ts` — navigation, product cards, journey strip, footer links, demo URL
-- `public/images/` — product artwork and video poster
-- `public/media/` — locally hosted product video
+- `components/` — navigation, dashboard, product previews, reveal animations, footer
+- `lib/data.ts` — navigation, product cards, footer links, demo URL
+- `public/images/` — product artwork and product-video posters
+- `public/media/products/` — locally hosted product videos
+
+The homepage uses scroll-triggered text, section, dashboard and product-preview motion. Animations respect reduced-motion preferences and fall back to visible content. The standalone demo-video strip and SAP technology ticker have been removed from the homepage.
 
 ## Replace placeholders before launch
 
@@ -32,8 +34,6 @@ Temporary SVG placeholders are included so image paths resolve during developmen
 - `public/images/percisuite.svg`
 - `public/images/futuroot.svg`
 - `public/images/workflow.svg`
-
-The video section currently uses the Mixkit clip [“Typing on a laptop”](https://mixkit.co/free-stock-video/typing-on-a-laptop-242/) (9 seconds, 720p), downloaded locally as `public/media/percipere-demo.mp4` with its poster at `public/images/video-poster.jpg`. Mixkit lists it under the [Stock Video Free License](https://mixkit.co/license/#videoFree) for commercial or personal use. Keep the source and license links with the asset; review Mixkit's current terms before redistribution or future replacement.
 
 Product-card previews are locally hosted Mixkit stock clips (720p), each listed under the Stock Video Free License for commercial or personal use:
 
@@ -47,6 +47,5 @@ Product-card previews are locally hosted Mixkit stock clips (720p), each listed 
 
 - Update `DEMO_HREF` in `lib/data.ts` to the real demo-booking route.
 - Verify navigation and footer URLs against actual routes.
-- Verify `JOURNEY` labels against Figma.
 - Replace Inter Tight with the licensed brand font if available.
 - Add the remaining product, company, resources, and legal pages if they are in scope. This package contains the supplied homepage implementation, not complete content for every linked route.

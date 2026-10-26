@@ -23,7 +23,7 @@ export default function Nav() {
               <button aria-expanded={open === g.label} aria-haspopup="true"
                 onClick={() => setOpen(open === g.label ? null : g.label)}>{g.label}</button>
               <ul className={open === g.label ? "open" : ""}>
-                {g.items.map(i => <li key={i.href}><Link href={i.href} onClick={() => { setOpen(null); setMobile(false); }}>{i.label}</Link></li>)}
+                {g.items.map(i => <li key={i.href}><Link href={i.href} prefetch={false} onClick={() => { setOpen(null); setMobile(false); }}>{i.label}</Link></li>)}
               </ul>
             </div>
           ))}
