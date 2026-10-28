@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import type { CSSProperties, PointerEvent } from "react";
-import { useState } from "react";
 import ProductPreview from "@/components/ProductPreview";
 import ProductTilt from "@/components/ProductTilt";
 import Reveal from "@/components/Reveal";
+import SpotlightCard from "@/components/SpotlightCard";
 
 type Product = {
   name: string;
@@ -17,33 +16,30 @@ type Product = {
 };
 
 export default function ProductCard({ product, delay = 0 }: { product: Product; delay?: number }) {
-  const [spot, setSpot] = useState({ x: "50%", y: "20%" });
-
-  const onMove = (event: PointerEvent<HTMLAnchorElement>) => {
-    if (event.pointerType === "touch") return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / Math.max(rect.width, 1)) * 100;
-    const y = ((event.clientY - rect.top) / Math.max(rect.height, 1)) * 100;
-    setSpot({ x: `${x.toFixed(1)}%`, y: `${y.toFixed(1)}%` });
-  };
-
   return (
     <Reveal delay={delay} className="product-card-reveal">
       <ProductTilt>
-        <Link
-          href={product.href}
-          prefetch={false}
-          className="card product-card"
-          style={{ "--spot-x": spot.x, "--spot-y": spot.y } as CSSProperties}
-          onPointerMove={onMove}
+        <SpotlightCard
+          className="product-spotlight"
+          theme="light"
+          spotlightColor="#1B1466"
+          intensity={0.22}
+          spotlightSize={280}
+          softness={0.75}
+          borderGlow={0.55}
+          proximity={40}
+          smoothing={0.35}
+          flare={false}
+          grain={0}
         >
-          <span className="product-card-glow" aria-hidden="true" />
-          <ProductPreview video={product.video} poster={product.poster} />
-          <small>{product.tag}</small>
-          <h3>{product.name}</h3>
-          <p>{product.desc}</p>
-          <span className="product-card-cta" aria-hidden="true">View suite</span>
-        </Link>
+          <Link href={product.href} prefetch={false} className="card product-card">
+            <ProductPreview video={product.video} poster={product.poster} />
+            <small>{product.tag}</small>
+            <h3>{product.name}</h3>
+            <p>{product.desc}</p>
+            <span className="product-card-cta" aria-hidden="true">View suite</span>
+          </Link>
+        </SpotlightCard>
       </ProductTilt>
     </Reveal>
   );

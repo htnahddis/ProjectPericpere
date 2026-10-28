@@ -4,6 +4,8 @@ import Footer from "@/components/Footer";
 import Features10 from "@/components/Features10";
 import HeroBackground from "@/components/HeroBackground";
 import ProductCard from "@/components/ProductCard";
+import PhaseRail from "@/components/PhaseRail";
+import PrimaryCta from "@/components/PrimaryCta";
 import Reveal from "@/components/Reveal";
 import TextReveal from "@/components/TextReveal";
 import StatementReveal from "@/components/StatementReveal";
@@ -117,17 +119,7 @@ export default function Home() {
               Across SAP Activate phases, PerciVerse keeps context continuous from discovery through realization.
             </p>
           </Reveal>
-          <div className="feature-grid">
-            {SAP_PHASES.map((phase, index) => (
-              <Reveal key={phase.label} delay={index * 80}>
-                <article className="feature-card">
-                  <span className="feature-label">{phase.label}</span>
-                  <h3>{phase.title}</h3>
-                  <p>{phase.text}</p>
-                </article>
-              </Reveal>
-            ))}
-          </div>
+          <PhaseRail phases={SAP_PHASES} />
         </section>
 
         {/* 5. Value & Next Steps */}
@@ -151,7 +143,7 @@ export default function Home() {
                 Talk with the team about how the suites and FUTUROOT fit your SAP transformation.
               </p>
               <div className="ctas">
-                <Link href={DEMO_HREF} prefetch={false} className="btn btn-dark">Talk to our team</Link>
+                <PrimaryCta />
                 <a href="#suites" className="btn btn-line">Review the suites</a>
               </div>
             </div>
