@@ -24,7 +24,10 @@ export default function ProductCard({
   size?: BentoSize;
 }) {
   return (
-    <article className={`bento-cell bento-${size}`}>
+    <article
+      id={`product-${product.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+      className={`bento-cell bento-${size}`}
+    >
       <ProductTilt>
         <SpotlightCard
           className="product-spotlight"
