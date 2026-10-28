@@ -3,12 +3,8 @@
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
-const LightTunnel = dynamic(() => import("@/components/LightTunnel"), { ssr: false });
+const Hyperspeed = dynamic(() => import("@/components/Hyperspeed"), { ssr: false });
 
-/**
- * Single WebGL hero canvas: LightTunnel on a white stage.
- * Cyan cables + magenta pulses + soft indigo tint; reduced-motion → wash only.
- */
 export default function HeroBackground() {
   const [reduceMotion, setReduceMotion] = useState(false);
   const [ready, setReady] = useState(false);
@@ -25,22 +21,35 @@ export default function HeroBackground() {
   return (
     <div className="hero-bg" aria-hidden="true">
       {ready && !reduceMotion ? (
-        <div className="hero-tunnel">
-          <LightTunnel
-            cableColor="#00B7FF"
-            pulseColor="#FF00B7"
-            tunnelColor="#1B1466"
-            tunnelOpacity={0.04}
-            cableCount={56}
-            pulseDensity={0.5}
-            flowDirection="inward"
-            mouseInteraction
-            clickSurge
-            lightMode
-            brightness={1}
-            glow={0.75}
-            opacity={1}
-            colorVariance
+        <div className="hero-hyperspeed">
+          <Hyperspeed
+            curve="gentle"
+            curvature={0.45}
+            speed={0.65}
+            boost={1.8}
+            fov={92}
+            boostFov={106}
+            lanes={4}
+            roadWidth={16}
+            medianWidth={5}
+            density={56}
+            trailLength={0.8}
+            lightSize={0.65}
+            poles={12}
+            poleHeight={0.7}
+            dust={100}
+            glow={0.24}
+            reflections={0.12}
+            steer={0.08}
+            tailColors={["#1B1466", "#FF00B7", "#00B7FF"]}
+            headColors={["#00B7FF", "#1B1466"]}
+            poleColors={["#00B7FF"]}
+            roadColor="#f4f5fa"
+            roadOpacity={0.025}
+            lineColor="#dfe2ed"
+            background="transparent"
+            theme="light"
+            interactive={false}
           />
         </div>
       ) : null}
