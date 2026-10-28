@@ -427,6 +427,11 @@ const LightTunnel = ({
       const surgeLevel = surge.age < 2.4 ? Math.min(1, surge.age / 0.12) * Math.exp(-surge.age * 1.1) : 0;
       const eased = reveal * reveal * (3 - 2 * reveal);
       gl.viewport(0, 0, width, height);
+      // Transparent clear so lightMode composites over a white CSS stage (no black sky).
+      gl.clearColor(0, 0, 0, 0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
       gl.useProgram(program.program);
       gl.bindVertexArray(vao);
       gl.uniform2f(u.uResolution, width, height);

@@ -22,40 +22,54 @@ export default function StatementReveal() {
   const [blurPx, setBlurPx] = useState(0);
   const [clarity, setClarity] = useState(1);
   const [lineProgress, setLineProgress] = useState<number[]>(() => LINES.map(() => 1));
+  const lastMeasure = useRef({ blur: 0, clarity: 1, lines: LINES.map(() => 1) });
 
   const measure = useCallback(() => {
     const el = rootRef.current;
     if (!el) return;
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setBlurPx(0);
-      setClarity(1);
-      setLineProgress(LINES.map(() => 1));
+      const current = lastMeasure.current;
+      if (current.blur !== 0) setBlurPx(0);
+      if (current.clarity !== 1) setClarity(1);
+      if (current.lines.some(progress => progress !== 1)) setLineProgress(LINES.map(() => 1));
+      lastMeasure.current = { blur: 0, clarity: 1, lines: LINES.map(() => 1) };
       return;
     }
 
     const rect = el.getBoundingClientRect();
     const vh = window.innerHeight || 1;
     const center = rect.top + rect.height / 2;
-    const viewCenter = vh * 0.48;
-    // 0 at center, grows as section moves away (enter from below or leave above)
-    const offset = Math.abs(center - viewCenter) / (vh * 0.55);
+    // Wider sharp zone + earlier center so blur clears before mid-viewport
+    const viewCenter = vh * 0.38;
+    const offset = Math.abs(center - viewCenter) / (vh * 0.78);
     const away = clamp01(offset);
-    // Sharp mid-viewport; soft blur approaching/leaving
-    const nextBlur = away * away * 18;
-    const nextClarity = 1 - away * 0.55;
+    const nextBlur = away * away * 10;
+    const nextClarity = 1 - away * 0.28;
 
-    // Section enter progress from bottom (0 below → 1 fully through)
-    const enter = clamp01(1 - (rect.bottom - vh * 0.15) / (rect.height + vh * 0.5));
+    // Reveal starts as soon as the band approaches the viewport (earlier trigger)
+    const revealStart = vh * 0.95;
+    const revealEnd = vh * 0.28;
+    const enter = clamp01((revealStart - rect.top) / Math.max(1, revealStart - revealEnd));
     const lines = LINES.map((_, index) => {
-      const start = index * 0.12;
-      const span = 0.38;
+      const start = index * 0.05;
+      const span = 0.24;
       return clamp01((enter - start) / span);
     });
 
-    setBlurPx(nextBlur);
-    setClarity(nextClarity);
-    setLineProgress(lines);
+    const previous = lastMeasure.current;
+    if (Math.abs(nextBlur - previous.blur) >= 0.08) {
+      setBlurPx(nextBlur);
+      previous.blur = nextBlur;
+    }
+    if (Math.abs(nextClarity - previous.clarity) >= 0.005) {
+      setClarity(nextClarity);
+      previous.clarity = nextClarity;
+    }
+    if (lines.some((progress, index) => Math.abs(progress - previous.lines[index]) >= 0.005)) {
+      setLineProgress(lines);
+      previous.lines = lines;
+    }
   }, []);
 
   useEffect(() => {

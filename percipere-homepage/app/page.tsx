@@ -97,7 +97,7 @@ export default function Home() {
         </SectionReveal>
 
         {/* Bridge statement — large animated copy */}
-        <SectionReveal as="section" className="wrap statement-band" aria-labelledby="statement-title">
+        <SectionReveal as="section" className="wrap statement-band" aria-labelledby="statement-title" early>
           <span id="statement-title" className="sr-only">
             One PerciVerse. Clearer decisions. Connect implementation, operations, and support through shared process intelligence across your SAP journey.
           </span>

@@ -12,12 +12,15 @@ export default function SectionReveal({
   as: Tag = "div",
   id,
   "aria-labelledby": ariaLabelledBy,
+  early = false,
 }: {
   children: ReactNode;
   className?: string;
   as?: "div" | "section";
   id?: string;
   "aria-labelledby"?: string;
+  /** Fire entrance sooner (e.g. statement band) */
+  early?: boolean;
 }) {
   const ref = useRef<HTMLElement>(null);
   const [ready, setReady] = useState(false);
@@ -32,15 +35,19 @@ export default function SectionReveal({
       return;
     }
 
+    const minRatio = early ? 0.02 : 0.12;
+    const rootMargin = early ? "18% 0px 8% 0px" : "0px 0px -12% 0px";
+    const threshold = early ? [0.02, 0.08, 0.15] : [0.12, 0.2];
+
     let observer: IntersectionObserver;
     try {
       observer = new IntersectionObserver(([entry]) => {
         setReady(true);
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.12) {
+        if (entry.isIntersecting && entry.intersectionRatio >= minRatio) {
           setOn(true);
           observer.disconnect();
         }
-      }, { rootMargin: "0px 0px -12% 0px", threshold: [0.12, 0.2] });
+      }, { rootMargin, threshold });
       observer.observe(element);
     } catch {
       setReady(true);
@@ -49,7 +56,7 @@ export default function SectionReveal({
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [early]);
 
   const stateClass = ready ? (on ? "in" : "pending") : "";
 
