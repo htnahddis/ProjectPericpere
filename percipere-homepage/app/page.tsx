@@ -3,11 +3,36 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Dashboard from "@/components/Dashboard";
+import Features10 from "@/components/Features10";
+import HeroNetwork from "@/components/HeroNetwork";
 import ProductPreview from "@/components/ProductPreview";
 import Reveal from "@/components/Reveal";
 import TextReveal from "@/components/TextReveal";
 import StatementReveal from "@/components/StatementReveal";
 import { PRODUCTS, DEMO_HREF } from "@/lib/data";
+
+const pillars = [
+  {
+    label: "Discover",
+    title: "Context across every system",
+    text: "Bring ERP, support, and operational data into one intelligible signal layer.",
+  },
+  {
+    label: "Analyze",
+    title: "Root cause before manual triage",
+    text: "Surface the likely issue, dependencies, and relevant history in seconds.",
+  },
+  {
+    label: "Act",
+    title: "Automated workflow orchestration",
+    text: "Turn recommendations into approved actions without breaking operational guardrails.",
+  },
+  {
+    label: "Learn",
+    title: "Continuous enterprise intelligence",
+    text: "Each resolution sharpens the next support interaction and business decision.",
+  },
+];
 
 export default function Home() {
   return (
@@ -15,23 +40,44 @@ export default function Home() {
       <Nav />
       <main>
         <section className="hero wrap">
-          <svg className="paths" viewBox="0 0 1200 500" aria-hidden>
-            <path d="M120 120 C 200 200, 260 260, 330 330" /><path d="M1000 140 C 940 220, 880 250, 840 330" />
-            <circle cx="120" cy="120" r="3" /><circle cx="1000" cy="140" r="3" />
-          </svg>
-          <p className="eyebrow">Enterprise AI for SAP</p>
-          <TextReveal as="h1" className="h1" lines={[
-            { text: "Intelligence Across" },
-            { text: "Your SAP Journey.", accent: "Journey." },
-          ]} />
-          <p className="lede hero-support">AI solutions for implementation, operations and support—grounded in enterprise context.</p>
-          <div className="ctas hero-actions">
-            <Link href="/products" prefetch={false} className="btn btn-dark">Explore our AI</Link>
-            <Link href={DEMO_HREF} prefetch={false} className="btn btn-line">Talk to our team</Link>
+          <div className="hero-bg" aria-hidden="true" />
+          <div className="hero-copy">
+            <p className="eyebrow">Enterprise AI for SAP</p>
+            <TextReveal as="h1" className="h1" lines={[
+              { text: "Intelligence Across" },
+              { text: "Your SAP Journey.", accent: "Journey." },
+            ]} />
+            <p className="lede hero-support">AI solutions for implementation, operations and support—grounded in enterprise context.</p>
+            <div className="ctas hero-actions">
+              <Link href="/products" prefetch={false} className="btn btn-dark">Explore our AI</Link>
+              <Link href={DEMO_HREF} prefetch={false} className="btn btn-line">Talk to our team</Link>
+            </div>
           </div>
+          <HeroNetwork />
         </section>
 
         <Reveal className="wrap hero-dash"><Dashboard /></Reveal>
+
+        <Features10 />
+
+        <section className="wrap ecosystem" id="ecosystem">
+          <Reveal>
+            <div className="row-head compact">
+              <TextReveal as="h2" className="h2" lines={[{ text: "How Percipere connects the enterprise" }]} />
+            </div>
+          </Reveal>
+          <div className="feature-grid">
+            {pillars.map((pillar, index) => (
+              <Reveal key={pillar.label} delay={index * 80}>
+                <article className="feature-card">
+                  <span className="feature-label">{pillar.label}</span>
+                  <h3>{pillar.title}</h3>
+                  <p>{pillar.text}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </section>
 
         <section className="wrap" id="capabilities">
           <Reveal>
