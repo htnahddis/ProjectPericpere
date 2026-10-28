@@ -1,10 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 
-const Particles = dynamic(() => import("@/components/Particles"), { ssr: false });
+const LightTunnel = dynamic(() => import("@/components/LightTunnel"), { ssr: false });
 
+/**
+ * Single WebGL hero canvas: LightTunnel (replaces Particles).
+ * Brand cyan cables + magenta pulses; reduced-motion → wash only.
+ */
 export default function HeroBackground() {
   const [reduceMotion, setReduceMotion] = useState(false);
   const [ready, setReady] = useState(false);
@@ -20,33 +24,27 @@ export default function HeroBackground() {
 
   return (
     <div className="hero-bg" aria-hidden="true">
-      <div className="hero-bg-wash" />
       {ready && !reduceMotion ? (
-        <div className="hero-particles">
-          <Particles
-            particleColors={["#1B1466", "#00B7FF", "#FF00B7", "#6B63C9"]}
-            particleCount={160}
-            particleSpread={11}
-            speed={0.06}
-            particleBaseSize={72}
-            sizeRandomness={0.85}
-            moveParticlesOnHover
-            hoverEffect="attract"
-            particleHoverFactor={0.7}
-            hoverRadius={150}
-            connections
-            connectionDistance={100}
-            glow={0.35}
-            twinkle={0.25}
-            alphaParticles
+        <div className="hero-tunnel">
+          <LightTunnel
+            cableColor="#00B7FF"
+            pulseColor="#FF00B7"
+            tunnelColor="#1B1466"
+            tunnelOpacity={0.08}
+            cableCount={56}
+            pulseDensity={0.5}
+            flowDirection="inward"
+            mouseInteraction
+            clickSurge
             lightMode
-            disableRotation={false}
-            clickBurst
-            opacity={0.85}
-            cameraDistance={22}
+            brightness={0.92}
+            glow={0.85}
+            opacity={0.9}
+            colorVariance
           />
         </div>
       ) : null}
+      <div className="hero-bg-wash" />
     </div>
   );
 }

@@ -9,6 +9,7 @@ import PrimaryCta from "@/components/PrimaryCta";
 import SectionReveal from "@/components/SectionReveal";
 import TextReveal from "@/components/TextReveal";
 import StatementReveal from "@/components/StatementReveal";
+import StatementBackground from "@/components/StatementBackground";
 import BlurText from "@/components/BlurText";
 import Magnet from "@/components/Magnet";
 import { PRODUCTS, SAP_PHASES, DEMO_HREF } from "@/lib/data";
@@ -101,6 +102,7 @@ export default function Home() {
             One PerciVerse. Clearer decisions. Connect implementation, operations, and support through shared process intelligence across your SAP journey.
           </span>
           <div className="statement">
+            <StatementBackground />
             <StatementReveal />
           </div>
         </SectionReveal>
