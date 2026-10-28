@@ -5,8 +5,8 @@ import "./globals.css";
 const font = Inter_Tight({ subsets: ["latin"], variable: "--font", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Percipere.ai — Intelligence across your SAP journey",
-  description: "AI solutions for implementation, operations and support, grounded in enterprise context.",
+  title: "Percipere.ai — PerciVerse for your SAP journey",
+  description: "PerciVerse connects PerciXpert, PerciServe, PerciHub, PerciSuite, and FUTUROOT process intelligence for SAP implementation, operations, and support.",
 };
 
 import type { ReactNode } from "react";

@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 
 const LINES = [
-  { text: "Enterprise complexity. Clearer decisions.", accent: "strong" },
-  { text: "Connect fragmented knowledge,", accent: "none" },
-  { text: "repetitive support and disconnected", accent: "none" },
-  { text: "processes through practical enterprise AI.", accent: "soft" },
+  { text: "One PerciVerse. Clearer decisions.", accent: "strong" },
+  { text: "Connect implementation, operations,", accent: "none" },
+  { text: "and support through shared process", accent: "none" },
+  { text: "intelligence across your SAP journey.", accent: "soft" },
 ] as const;
 
 export default function StatementReveal() {

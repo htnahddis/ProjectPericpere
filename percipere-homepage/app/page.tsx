@@ -1,87 +1,88 @@
-import Image from "next/image";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import Dashboard from "@/components/Dashboard";
 import Features10 from "@/components/Features10";
-import HeroNetwork from "@/components/HeroNetwork";
+import HeroBackground from "@/components/HeroBackground";
 import ProductPreview from "@/components/ProductPreview";
 import Reveal from "@/components/Reveal";
 import TextReveal from "@/components/TextReveal";
 import StatementReveal from "@/components/StatementReveal";
-import { PRODUCTS, DEMO_HREF } from "@/lib/data";
-
-const pillars = [
-  {
-    label: "Discover",
-    title: "Context across every system",
-    text: "Bring ERP, support, and operational data into one intelligible signal layer.",
-  },
-  {
-    label: "Analyze",
-    title: "Root cause before manual triage",
-    text: "Surface the likely issue, dependencies, and relevant history in seconds.",
-  },
-  {
-    label: "Act",
-    title: "Automated workflow orchestration",
-    text: "Turn recommendations into approved actions without breaking operational guardrails.",
-  },
-  {
-    label: "Learn",
-    title: "Continuous enterprise intelligence",
-    text: "Each resolution sharpens the next support interaction and business decision.",
-  },
-];
+import BlurText from "@/components/BlurText";
+import { PRODUCTS, SAP_PHASES, DEMO_HREF } from "@/lib/data";
 
 export default function Home() {
   return (
     <>
       <Nav />
       <main>
-        <section className="hero wrap">
-          <div className="hero-bg" aria-hidden="true" />
+        {/* 1. Hero — Introducing PerciVerse */}
+        <section className="hero wrap" aria-labelledby="hero-title">
+          <HeroBackground />
           <div className="hero-copy">
-            <p className="eyebrow">Enterprise AI for SAP</p>
-            <TextReveal as="h1" className="h1" lines={[
-              { text: "Intelligence Across" },
-              { text: "Your SAP Journey.", accent: "Journey." },
-            ]} />
-            <p className="lede hero-support">AI solutions for implementation, operations and support—grounded in enterprise context.</p>
+            <p className="eyebrow">Introducing PerciVerse</p>
+            <p className="brand-signal" aria-hidden="true">Percipere</p>
+            <TextReveal
+              as="h1"
+              className="h1"
+              lines={[
+                { text: "PerciVerse." },
+                { text: "One connected system", accent: "connected" },
+                { text: "for your SAP journey." },
+              ]}
+            />
+            <span id="hero-title" className="sr-only">PerciVerse. One connected system for your SAP journey.</span>
+            <BlurText
+              className="lede hero-support"
+              text="AI suites for implementation, operations, and support—grounded in FUTUROOT process intelligence."
+              delay={80}
+              animateBy="words"
+              direction="bottom"
+              effect="blur"
+              blur={8}
+              distance={18}
+              stepDuration={0.28}
+              trigger="load"
+            />
             <div className="ctas hero-actions">
-              <Link href="/products" prefetch={false} className="btn btn-dark">Explore our AI</Link>
+              <a href="#ecosystem" className="btn btn-dark">Explore PerciVerse</a>
               <Link href={DEMO_HREF} prefetch={false} className="btn btn-line">Talk to our team</Link>
             </div>
           </div>
-          <HeroNetwork />
         </section>
 
-        <Reveal className="wrap hero-dash"><Dashboard /></Reveal>
-
-        <Features10 />
-
-        <section className="wrap ecosystem" id="ecosystem">
-          <Reveal>
-            <div className="row-head compact">
-              <TextReveal as="h2" className="h2" lines={[{ text: "How Percipere connects the enterprise" }]} />
-            </div>
+        {/* 2. The Ecosystem — One Connected System */}
+        <section className="wrap ecosystem features10" id="ecosystem" aria-labelledby="ecosystem-title">
+          <Reveal className="features10-copy">
+            <p className="eyebrow left">The Ecosystem</p>
+            <TextReveal as="h2" className="h2" lines={[{ text: "One connected system" }]} />
+            <span id="ecosystem-title" className="sr-only">One connected system</span>
+            <BlurText
+              className="lede left"
+              text="FUTUROOT sits at the centre as the process intelligence layer that gives every suite shared enterprise context."
+              delay={60}
+              animateBy="words"
+              direction="bottom"
+              effect="focus"
+              blur={6}
+              distance={12}
+              stepDuration={0.26}
+              trigger="view"
+            />
           </Reveal>
-          <div className="feature-grid">
-            {pillars.map((pillar, index) => (
-              <Reveal key={pillar.label} delay={index * 80}>
-                <article className="feature-card">
-                  <span className="feature-label">{pillar.label}</span>
-                  <h3>{pillar.title}</h3>
-                  <p>{pillar.text}</p>
-                </article>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal delay={120}>
+            <Features10 />
+          </Reveal>
         </section>
 
-        <section className="wrap" id="capabilities">
+        {/* 3. The Product Suites */}
+        <section className="wrap" id="suites" aria-labelledby="suites-title">
           <Reveal>
-            <div className="row-head"><TextReveal as="h2" className="h2" lines={[{ text: "Capabilities" }]} /><Link href="/products" prefetch={false} className="ulink">View all products ↗</Link></div>
+            <div className="row-head">
+              <TextReveal as="h2" className="h2" lines={[{ text: "The Product Suites" }]} />
+              <span id="suites-title" className="sr-only">The Product Suites</span>
+              <a href="#next-steps" className="ulink">Talk through fit ↗</a>
+            </div>
+            <p className="section-lede">Four suites and a shared intelligence layer—each focused, all connected.</p>
           </Reveal>
           <div className="grid">
             {PRODUCTS.map((p, i) => (
@@ -97,35 +98,58 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="wrap split">
-          <Reveal className="split-visual">
-            <div className="split-img"><Image src="/images/workflow.svg" alt="PerciServe interface on a monitor" fill sizes="(max-width:900px) 100vw, 50vw" /></div>
-          </Reveal>
+        {/* 4. How the Ecosystem Supports SAP Transformation */}
+        <section className="wrap sap-transform" id="transformation" aria-labelledby="transform-title">
           <Reveal>
-            <p className="eyebrow left">PerciServe in action</p>
-            <TextReveal as="h2" className="h2" lines={[{ text: "From query to resolution—without losing context." }]} />
-            <ul className="checks">
-              <li>Routine queries resolved on first touch</li>
-              <li>Escalations arrive with full investigation context</li>
-              <li>Every fix feeds the next resolution</li>
-            </ul>
+            <div className="row-head compact">
+              <TextReveal
+                as="h2"
+                className="h2"
+                lines={[{ text: "How the ecosystem supports SAP transformation" }]}
+              />
+              <span id="transform-title" className="sr-only">How the ecosystem supports SAP transformation</span>
+            </div>
+            <p className="section-lede">
+              Across SAP Activate phases, PerciVerse keeps context continuous from discovery through realization.
+            </p>
           </Reveal>
+          <div className="feature-grid">
+            {SAP_PHASES.map((phase, index) => (
+              <Reveal key={phase.label} delay={index * 80}>
+                <article className="feature-card">
+                  <span className="feature-label">{phase.label}</span>
+                  <h3>{phase.title}</h3>
+                  <p>{phase.text}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
         </section>
 
-        <section className="wrap">
-          <div className="statement"><StatementReveal /></div>
-        </section>
-
-        <section className="wrap final">
+        {/* 5. Value & Next Steps */}
+        <section className="wrap value-next" id="next-steps" aria-labelledby="next-title">
+          <div className="statement">
+            <StatementReveal />
+          </div>
           <Reveal>
-            <TextReveal as="h2" className="h1 sm" lines={[
-              { text: "Built for Real", accent: "Real" },
-              { text: "Enterprise Challenges" },
-            ]} />
-            <p className="lede">Explore how Percipere brings AI and SAP expertise together.</p>
-            <div className="ctas">
-              <Link href={DEMO_HREF} prefetch={false} className="btn btn-dark">Talk to our team</Link>
-              <Link href="/products" prefetch={false} className="btn btn-line">Our products</Link>
+            <div className="final">
+              <p className="eyebrow">Value & next steps</p>
+              <TextReveal
+                as="h2"
+                className="h1 sm"
+                lines={[
+                  { text: "Ready to see PerciVerse", accent: "PerciVerse" },
+                  { text: "in your landscape?" },
+                ]}
+              />
+              <span id="next-title" className="sr-only">Ready to see PerciVerse in your landscape?</span>
+              <p className="lede">
+                Talk with the team about how the suites and FUTUROOT fit your SAP transformation.
+              </p>
+              <div className="ctas">
+                <Link href={DEMO_HREF} prefetch={false} className="btn btn-dark">Talk to our team</Link>
+                <a href="#suites" className="btn btn-line">Review the suites</a>
+              </div>
             </div>
           </Reveal>
         </section>
