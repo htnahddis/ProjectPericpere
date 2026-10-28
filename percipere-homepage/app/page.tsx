@@ -3,11 +3,12 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Features10 from "@/components/Features10";
 import HeroBackground from "@/components/HeroBackground";
-import ProductPreview from "@/components/ProductPreview";
+import ProductCard from "@/components/ProductCard";
 import Reveal from "@/components/Reveal";
 import TextReveal from "@/components/TextReveal";
 import StatementReveal from "@/components/StatementReveal";
 import BlurText from "@/components/BlurText";
+import Magnet from "@/components/Magnet";
 import { PRODUCTS, SAP_PHASES, DEMO_HREF } from "@/lib/data";
 
 export default function Home() {
@@ -34,17 +35,27 @@ export default function Home() {
             <BlurText
               className="lede hero-support"
               text="AI suites for implementation, operations, and support—grounded in FUTUROOT process intelligence."
-              delay={80}
+              delay={70}
               animateBy="words"
               direction="bottom"
               effect="blur"
               blur={8}
-              distance={18}
-              stepDuration={0.28}
+              distance={16}
+              stepDuration={0.26}
               trigger="load"
             />
             <div className="ctas hero-actions">
-              <a href="#ecosystem" className="btn btn-dark">Explore PerciVerse</a>
+              <Magnet
+                padding={48}
+                magnetStrength={3.2}
+                maxOffset={8}
+                scale={1.015}
+                tilt={0}
+                spring={{ stiffness: 200, damping: 20, mass: 1 }}
+                wrapperClassName="magnet-cta"
+              >
+                <a href="#ecosystem" className="btn btn-dark">Explore PerciVerse</a>
+              </Magnet>
               <Link href={DEMO_HREF} prefetch={false} className="btn btn-line">Talk to our team</Link>
             </div>
           </div>
@@ -59,17 +70,17 @@ export default function Home() {
             <BlurText
               className="lede left"
               text="FUTUROOT sits at the centre as the process intelligence layer that gives every suite shared enterprise context."
-              delay={60}
+              delay={55}
               animateBy="words"
               direction="bottom"
               effect="focus"
               blur={6}
               distance={12}
-              stepDuration={0.26}
+              stepDuration={0.24}
               trigger="view"
             />
           </Reveal>
-          <Reveal delay={120}>
+          <Reveal delay={100}>
             <Features10 />
           </Reveal>
         </section>
@@ -84,16 +95,9 @@ export default function Home() {
             </div>
             <p className="section-lede">Four suites and a shared intelligence layer—each focused, all connected.</p>
           </Reveal>
-          <div className="grid">
+          <div className="grid product-grid">
             {PRODUCTS.map((p, i) => (
-              <Reveal key={p.name} delay={(i % 3) * 80}>
-                <Link href={p.href} prefetch={false} className="card">
-                  <ProductPreview video={p.video} poster={p.poster} />
-                  <small>{p.tag}</small>
-                  <h3>{p.name}</h3>
-                  <p>{p.desc}</p>
-                </Link>
-              </Reveal>
+              <ProductCard key={p.name} product={p} delay={(i % 3) * 90} />
             ))}
           </div>
         </section>

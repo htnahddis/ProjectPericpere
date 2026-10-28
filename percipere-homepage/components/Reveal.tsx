@@ -1,6 +1,10 @@
 "use client";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
+/**
+ * Once-on-enter section reveal. Disconnects after first intersect so tiny
+ * scroll jitter cannot replay the animation. Visible by default if JS fails.
+ */
 export default function Reveal({ children, delay = 0, className = "" }:
   { children: ReactNode; delay?: number; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -20,11 +24,11 @@ export default function Reveal({ children, delay = 0, className = "" }:
     try {
       observer = new IntersectionObserver(([entry]) => {
         setReady(true);
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.08) {
           setOn(true);
           observer.disconnect();
         }
-      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.01 });
+      }, { rootMargin: "0px 0px -10% 0px", threshold: [0.08, 0.16] });
       observer.observe(element);
     } catch {
       setReady(true);
@@ -36,5 +40,13 @@ export default function Reveal({ children, delay = 0, className = "" }:
   }, []);
 
   const stateClass = ready ? (on ? "in" : "pending") : "";
-  return <div ref={ref} className={`reveal ${stateClass} ${className}`} style={{ transitionDelay: `${delay}ms` }}>{children}</div>;
+  return (
+    <div
+      ref={ref}
+      className={`reveal ${stateClass} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
 }
