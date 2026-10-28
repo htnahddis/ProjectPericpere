@@ -1,52 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import BlurText from "@/components/BlurText";
 
 const LINES = [
-  { text: "One PerciVerse. Clearer decisions.", accent: "strong" },
-  { text: "Connect implementation, operations,", accent: "none" },
-  { text: "and support through shared process", accent: "none" },
-  { text: "intelligence across your SAP journey.", accent: "soft" },
-] as const;
+  { text: "One PerciVerse. Clearer decisions.", lead: true },
+  { text: "Connect implementation, operations," },
+  { text: "and support through shared process" },
+  { text: "intelligence across your SAP journey." },
+];
 
+/**
+ * Dominant statement band — large type + obvious BlurText entrance.
+ * Responsive clamp keeps it readable on mobile while still hero-scale.
+ */
 export default function StatementReveal() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(false);
-  const [reduceMotion, setReduceMotion] = useState(false);
-
-  useEffect(() => {
-    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updateMotionPreference = () => setReduceMotion(motionQuery.matches);
-    updateMotionPreference();
-    motionQuery.addEventListener?.("change", updateMotionPreference);
-
-    const element = ref.current;
-    if (!element || !("IntersectionObserver" in window)) {
-      setActive(true);
-      return () => motionQuery.removeEventListener?.("change", updateMotionPreference);
-    }
-
-    let observer: IntersectionObserver;
-    try {
-      observer = new IntersectionObserver(([entry]) => {
-        setActive(entry.isIntersecting);
-      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.01 });
-      observer.observe(element);
-    } catch {
-      setActive(true);
-      return () => motionQuery.removeEventListener?.("change", updateMotionPreference);
-    }
-
-    return () => {
-      observer.disconnect();
-      motionQuery.removeEventListener?.("change", updateMotionPreference);
-    };
-  }, []);
-
-  let wordIndex = 0;
+  const full = LINES.map(line => line.text).join(" ");
 
   return (
-    <div ref={ref} className={`statement-reveal ${active || reduceMotion ? "is-active" : ""}`}>
+    <div className="statement-reveal statement-reveal--xl">
       <svg className="statement-globe" viewBox="0 0 600 600" aria-hidden="true">
         <circle cx="300" cy="300" r="270" />
         <ellipse cx="300" cy="300" rx="190" ry="270" />
@@ -55,32 +26,30 @@ export default function StatementReveal() {
         <ellipse cx="300" cy="300" rx="270" ry="88" />
         <path d="M30 300h540M64 165h472M64 435h472" />
       </svg>
-      <p className="statement-copy" aria-label={LINES.map(line => line.text).join(" ")}>
-        {LINES.map((line, lineIndex) => {
-          const words = line.text.split(" ");
-          return (
-            <span className="statement-line" key={lineIndex} aria-hidden="true">
-              {words.map((word, index) => {
-                const delay = wordIndex++ * 75;
-                const isFinalAccent = line.accent === "soft" && index > 1;
-                const isLeadAccent = line.accent === "strong" && index > 1;
-
-                return (
-                  <span className="statement-word-wrap" key={`${word}-${index}`}>
-                    {index > 0 ? " " : null}
-                    <span
-                      className={`statement-word${isLeadAccent ? " statement-word-strong" : ""}${isFinalAccent ? " statement-word-soft" : ""}`}
-                      style={{ transitionDelay: `${delay}ms` }}
-                    >
-                      {word}
-                    </span>
-                  </span>
-                );
-              })}
-            </span>
-          );
-        })}
-      </p>
+      <div className="statement-copy" aria-label={full}>
+        {LINES.map((line, index) => (
+          <div
+            key={line.text}
+            className={`statement-blur-wrap${line.lead ? " is-lead" : ""}`}
+            style={{ transitionDelay: `${index * 120}ms` }}
+          >
+            <BlurText
+              className="statement-blur-line"
+              text={line.text}
+              delay={line.lead ? 90 : 70}
+              animateBy="words"
+              direction="bottom"
+              effect={line.lead ? "blur" : "focus"}
+              blur={line.lead ? 16 : 12}
+              distance={line.lead ? 32 : 22}
+              stepDuration={0.34}
+              trigger="view"
+              color={line.lead ? "#1B1466" : "#171717"}
+              fromColor="#c8c8d4"
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

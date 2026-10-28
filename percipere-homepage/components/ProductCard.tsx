@@ -3,7 +3,6 @@
 import Link from "next/link";
 import ProductPreview from "@/components/ProductPreview";
 import ProductTilt from "@/components/ProductTilt";
-import Reveal from "@/components/Reveal";
 import SpotlightCard from "@/components/SpotlightCard";
 
 type Product = {
@@ -15,16 +14,24 @@ type Product = {
   desc: string;
 };
 
-export default function ProductCard({ product, delay = 0 }: { product: Product; delay?: number }) {
+export type BentoSize = "feature" | "wide" | "default";
+
+export default function ProductCard({
+  product,
+  size = "default",
+}: {
+  product: Product;
+  size?: BentoSize;
+}) {
   return (
-    <Reveal delay={delay} className="product-card-reveal">
+    <article className={`bento-cell bento-${size}`}>
       <ProductTilt>
         <SpotlightCard
           className="product-spotlight"
           theme="light"
           spotlightColor="#1B1466"
           intensity={0.22}
-          spotlightSize={280}
+          spotlightSize={size === "feature" ? 360 : 280}
           softness={0.75}
           borderGlow={0.55}
           proximity={40}
@@ -34,13 +41,15 @@ export default function ProductCard({ product, delay = 0 }: { product: Product; 
         >
           <Link href={product.href} prefetch={false} className="card product-card">
             <ProductPreview video={product.video} poster={product.poster} />
-            <small>{product.tag}</small>
-            <h3>{product.name}</h3>
-            <p>{product.desc}</p>
-            <span className="product-card-cta" aria-hidden="true">View suite</span>
+            <div className="product-card-meta">
+              <small>{product.tag}</small>
+              <h3>{product.name}</h3>
+              <p>{product.desc}</p>
+              <span className="product-card-cta" aria-hidden="true">View suite</span>
+            </div>
           </Link>
         </SpotlightCard>
       </ProductTilt>
-    </Reveal>
+    </article>
   );
 }
