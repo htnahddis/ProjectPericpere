@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import { useEffect, useState, type ComponentType, type ReactNode } from "react";
 import { PRODUCTS } from "@/lib/data";
 
@@ -13,9 +12,9 @@ const FEATURED = PRODUCTS.find(p => p.name === "FUTUROOT") ?? PRODUCTS[0];
 
 /**
  * Suites band: ScrollExpand over product media (window scroll + Lenis).
- * Reduced-motion → static full frame with product links.
+ * Reduced-motion → static full frame with the suite browser.
  */
-export default function SuitesScrollExpand() {
+export default function SuitesScrollExpand({ browseContent }: { browseContent: ReactNode }) {
   const [reduceMotion, setReduceMotion] = useState(false);
   const [ready, setReady] = useState(false);
 
@@ -28,21 +27,9 @@ export default function SuitesScrollExpand() {
     return () => query.removeEventListener?.("change", sync);
   }, []);
 
-  const links = (
-    <div className="suites-expand-overlay">
-      <p className="eyebrow">PerciVerse suites</p>
-      <h2 className="h2">Four suites. One intelligence layer.</h2>
-      <p className="lede">Explore how each suite connects through FUTUROOT.</p>
-      <ul className="suites-expand-links">
-        {PRODUCTS.map(product => (
-          <li key={product.name}>
-            <Link href={product.href} prefetch={false}>
-              <strong>{product.name}</strong>
-              <span>{product.tag}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+  const overlay = (
+    <div className="suites-browse-overlay" data-lenis-prevent>
+      {browseContent}
     </div>
   );
 
@@ -55,7 +42,7 @@ export default function SuitesScrollExpand() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={FEATURED.poster} alt="" />
           <div className="suites-expand-static-scrim" />
-          {links}
+          {overlay}
         </div>
       </div>
     );
@@ -81,7 +68,7 @@ export default function SuitesScrollExpand() {
         overlayScrim={0.42}
         useWindowScroll
       >
-        {links}
+        {overlay}
       </ScrollExpand>
     </div>
   );

@@ -78,7 +78,7 @@ small{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--m
 .features10{display:grid;grid-template-columns:0.9fr 1.1fr;align-items:center;gap:32px;padding-top:96px;padding-bottom:40px}
 .features10-copy{max-width:540px}
 .features10 .eyebrow{margin-bottom:20px}
-.sap-transform{padding-bottom:48px;width:100%;position:relative;z-index:1;background:#fff;opacity:1!important;transform:none!important}
+.sap-transform{padding-bottom:48px;width:100%;position:relative;z-index:1;background:#fff}
 .sap-gallery{width:100%;margin-top:28px}
 .sap-gallery-stage{position:relative;width:100%;height:clamp(560px,72vh,720px);min-height:560px;background:
   radial-gradient(circle at 50% 30%,rgba(0,183,255,.08),transparent 42%),

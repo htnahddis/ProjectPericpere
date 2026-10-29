@@ -94,6 +94,8 @@ const ScrollExpand = ({
       const inn = smoothstep(0.68, 1, p);
       overlayRef.current.style.opacity = `${inn}`;
       overlayRef.current.style.transform = `translate3d(0, ${18 * (1 - inn)}px, 0)`;
+      overlayRef.current.style.visibility = inn > 0 ? 'visible' : 'hidden';
+      overlayRef.current.style.pointerEvents = inn >= 0.999 ? 'auto' : 'none';
     }
   }, []);
 
