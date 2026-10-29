@@ -35,27 +35,39 @@ export default function SectionReveal({
       return;
     }
 
-    const minRatio = early ? 0.02 : 0.12;
-    const rootMargin = early ? "18% 0px 8% 0px" : "0px 0px -12% 0px";
-    const threshold = early ? [0.02, 0.08, 0.15] : [0.12, 0.2];
+    // Avoid a long opacity:0 gap after ScrollExpand / sticky bands:
+    // fire sooner, and fail open if we never clear the threshold.
+    const minRatio = early ? 0.01 : 0.08;
+    const rootMargin = early ? "25% 0px 15% 0px" : "0px 0px -8% 0px";
+    const threshold = early ? [0, 0.01, 0.05, 0.12] : [0.05, 0.12, 0.2];
 
     let observer: IntersectionObserver;
+    const failOpen = window.setTimeout(() => {
+      setReady(true);
+      setOn(true);
+    }, early ? 1200 : 2800);
+
     try {
       observer = new IntersectionObserver(([entry]) => {
         setReady(true);
         if (entry.isIntersecting && entry.intersectionRatio >= minRatio) {
           setOn(true);
+          window.clearTimeout(failOpen);
           observer.disconnect();
         }
       }, { rootMargin, threshold });
       observer.observe(element);
     } catch {
+      window.clearTimeout(failOpen);
       setReady(true);
       setOn(true);
       return;
     }
 
-    return () => observer.disconnect();
+    return () => {
+      window.clearTimeout(failOpen);
+      observer.disconnect();
+    };
   }, [early]);
 
   const stateClass = ready ? (on ? "in" : "pending") : "";

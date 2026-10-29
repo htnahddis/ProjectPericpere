@@ -130,23 +130,21 @@ export default function Home() {
           />
         </section>
 
-        {/* 4. SAP Transformation — CircularGallery */}
-        <SectionReveal as="section" className="full-section sap-transform" id="transformation" aria-labelledby="transform-title" early>
+        {/* 4. SAP Transformation — always visible heading + PhaseRail; gallery enhances */}
+        <section className="full-section sap-transform" id="transformation" aria-labelledby="transform-title">
           <div className="wrap">
             <div className="row-head compact">
-              <TextReveal
-                as="h2"
-                className="h2"
-                lines={[{ text: "How the ecosystem supports SAP transformation" }]}
-              />
-              <span id="transform-title" className="sr-only">How the ecosystem supports SAP transformation</span>
+              <p className="eyebrow left">SAP Activate</p>
+              <h2 id="transform-title" className="h2">
+                How the ecosystem supports SAP transformation
+              </h2>
             </div>
             <p className="section-lede">
               Across SAP Activate phases, PerciVerse keeps context continuous from discovery through realization.
             </p>
           </div>
           <SapPhaseGallery phases={SAP_PHASES} />
-        </SectionReveal>
+        </section>
 
         {/* 5. Value & Next Steps */}
         <SectionReveal as="section" className="full-section wrap value-next" id="next-steps" aria-labelledby="next-title" early>
