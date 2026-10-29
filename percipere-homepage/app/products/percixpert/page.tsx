@@ -6,6 +6,7 @@ import SectionReveal from "@/components/SectionReveal";
 import TextReveal from "@/components/TextReveal";
 import EvidenceFlow from "@/components/product/EvidenceFlow";
 import ProductCta from "@/components/product/ProductCta";
+import ProductHeroBg from "@/components/product/ProductHeroBg";
 import WorkflowSteps from "@/components/product/WorkflowSteps";
 import { PERCIXPERT } from "@/lib/products/percixpert";
 
@@ -21,25 +22,28 @@ export default function PerciXpertPage() {
     <>
       <Nav />
       <main className="product-page product-page--xpert">
-        <section className="product-hero wrap">
-          <div className="product-hero-copy">
-            <p className="eyebrow left">{p.eyebrow}</p>
-            <p className="brand-signal product-brand">{p.name}</p>
-            <TextReveal
-              as="h1"
-              className="h1 sm"
-              lines={[
-                { text: "Evidence in.", accent: "Evidence" },
-                { text: "Defensible ERP decisions out." },
-              ]}
-            />
-            <p className="lede left product-lede">{p.support}</p>
-            <div className="ctas product-ctas">
-              <ProductCta href={p.ctaHref} label={p.ctaLabel} />
-              <Link href="/#suites" className="btn btn-line">Back to suites</Link>
+        <section className="product-hero product-hero--bleed">
+          <ProductHeroBg variant="xpert" />
+          <div className="wrap product-hero-grid">
+            <div className="product-hero-copy">
+              <p className="eyebrow left">{p.eyebrow}</p>
+              <p className="brand-signal product-brand">{p.name}</p>
+              <TextReveal
+                as="h1"
+                className="h1 sm"
+                lines={[
+                  { text: "Evidence in.", accent: "Evidence" },
+                  { text: "Defensible ERP decisions out." },
+                ]}
+              />
+              <p className="lede left product-lede">{p.support}</p>
+              <div className="ctas product-ctas">
+                <ProductCta href={p.ctaHref} label={p.ctaLabel} />
+                <Link href="/#suites" className="btn btn-line">Back to suites</Link>
+              </div>
             </div>
+            <EvidenceFlow />
           </div>
-          <EvidenceFlow />
         </section>
 
         <SectionReveal as="section" className="wrap product-section" early>

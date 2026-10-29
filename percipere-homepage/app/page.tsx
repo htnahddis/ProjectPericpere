@@ -10,6 +10,7 @@ import SectionReveal from "@/components/SectionReveal";
 import TextReveal from "@/components/TextReveal";
 import StatementReveal from "@/components/StatementReveal";
 import StatementBackground from "@/components/StatementBackground";
+import SuitesScrollExpand from "@/components/SuitesScrollExpand";
 import BlurText from "@/components/BlurText";
 import Magnet from "@/components/Magnet";
 import { PRODUCTS, SAP_PHASES, DEMO_HREF } from "@/lib/data";
@@ -29,19 +30,16 @@ export default function Home() {
     <>
       <Nav />
       <main>
-        {/* 1. Hero — Introducing PerciVerse */}
-        <section className="hero wrap" aria-labelledby="hero-title">
+        {/* 1. Hero — full-bleed WebThreads (no card) */}
+        <section className="hero" aria-labelledby="hero-title">
           <HeroBackground />
-          <div className="hero-copy">
-            <p className="eyebrow">Introducing PerciVerse</p>
-            <p className="brand-signal" aria-hidden="true">Percipere</p>
+          <div className="wrap hero-copy">
             <TextReveal
               as="h1"
               className="h1"
               lines={[
-                { text: "PerciVerse." },
-                { text: "One connected system", accent: "connected" },
-                { text: "for your SAP journey." },
+                { text: "One connected system" },
+                { text: "accelerating your ERP journey.", accent: "accelerating" },
               ]}
             />
             <span id="hero-title" className="sr-only">PerciVerse. One connected system for your SAP journey.</span>
@@ -74,8 +72,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 2. The Ecosystem — One Connected System */}
-        <SectionReveal as="section" className="wrap ecosystem features10" id="ecosystem" aria-labelledby="ecosystem-title">
+        {/* 2. The Ecosystem */}
+        <SectionReveal as="section" className="full-section wrap ecosystem features10" id="ecosystem" aria-labelledby="ecosystem-title" early>
           <div className="features10-copy">
             <p className="eyebrow left">The Ecosystem</p>
             <TextReveal as="h2" className="h2" lines={[{ text: "One connected system" }]} />
@@ -96,36 +94,41 @@ export default function Home() {
           <Features10 />
         </SectionReveal>
 
-        {/* Bridge statement — large animated copy */}
-        <SectionReveal as="section" className="wrap statement-band" aria-labelledby="statement-title" early>
+        {/* Bridge statement — white + Hyperspeed */}
+        <SectionReveal as="section" className="full-section statement-band" aria-labelledby="statement-title" early>
           <span id="statement-title" className="sr-only">
             One PerciVerse. Clearer decisions. Connect implementation, operations, and support through shared process intelligence across your SAP journey.
           </span>
           <div className="statement">
             <StatementBackground />
-            <StatementReveal />
+            <div className="wrap statement-inner">
+              <StatementReveal />
+            </div>
           </div>
         </SectionReveal>
 
-        {/* 3. The Product Suites — bento */}
-        <SectionReveal as="section" className="wrap suites-section" id="suites" aria-labelledby="suites-title">
-          <div className="row-head">
-            <TextReveal as="h2" className="h2" lines={[{ text: "The Product Suites" }]} />
-            <span id="suites-title" className="sr-only">The Product Suites</span>
-            <a href="#next-steps" className="ulink">Talk through fit ↗</a>
-          </div>
-          <p className="section-lede">Four suites and a shared intelligence layer—each focused, all connected.</p>
-          <div className="bento-grid">
-            {BENTO_ORDER.map(slot => {
-              const product = byName[slot.name];
-              if (!product) return null;
-              return <ProductCard key={product.name} product={product} size={slot.size} />;
-            })}
-          </div>
-        </SectionReveal>
+        {/* 3. Product Suites — ScrollExpand + bento */}
+        <section className="suites-section" id="suites" aria-labelledby="suites-title">
+          <span id="suites-title" className="sr-only">The Product Suites</span>
+          <SuitesScrollExpand />
+          <SectionReveal as="div" className="wrap suites-bento" early>
+            <div className="row-head">
+              <h2 className="h2">Browse the suites</h2>
+              <a href="#next-steps" className="ulink">Talk through fit ↗</a>
+            </div>
+            <p className="section-lede">Four suites and a shared intelligence layer—each focused, all connected.</p>
+            <div className="bento-grid">
+              {BENTO_ORDER.map(slot => {
+                const product = byName[slot.name];
+                if (!product) return null;
+                return <ProductCard key={product.name} product={product} size={slot.size} />;
+              })}
+            </div>
+          </SectionReveal>
+        </section>
 
-        {/* 4. How the Ecosystem Supports SAP Transformation */}
-        <SectionReveal as="section" className="wrap sap-transform" id="transformation" aria-labelledby="transform-title">
+        {/* 4. SAP Transformation */}
+        <SectionReveal as="section" className="full-section wrap sap-transform" id="transformation" aria-labelledby="transform-title" early>
           <div className="row-head compact">
             <TextReveal
               as="h2"
@@ -141,7 +144,7 @@ export default function Home() {
         </SectionReveal>
 
         {/* 5. Value & Next Steps */}
-        <SectionReveal as="section" className="wrap value-next" id="next-steps" aria-labelledby="next-title">
+        <SectionReveal as="section" className="full-section wrap value-next" id="next-steps" aria-labelledby="next-title" early>
           <div className="final">
             <p className="eyebrow">Value & next steps</p>
             <TextReveal

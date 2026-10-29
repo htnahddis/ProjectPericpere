@@ -5,15 +5,14 @@ import { useEffect, useRef, useState } from "react";
 
 const Hyperspeed = dynamic(() => import("@/components/Hyperspeed"), { ssr: false });
 
-/** Brand-tinted trails: magenta/indigo tails, cyan heads (from user props). */
-const TAIL_COLORS = ["#FF00B7", "#6750a2", "#d856bf"];
+/** Brand trails on a white statement stage. */
+const TAIL_COLORS = ["#FF00B7", "#1B1466", "#d856bf"];
 const HEAD_COLORS = ["#00B7FF", "#0e5ea5", "#1B1466"];
 const POLE_COLORS = ["#00B7FF"];
 
 /**
- * Lazy Hyperspeed behind the statement band.
- * Mounts only near viewport; reduced-motion → off (static wash only).
- * Pairs with hero Particles — Hyperspeed tears down when far offscreen.
+ * Hyperspeed behind the statement band on white.
+ * In-view mount; reduced-motion → wash only.
  */
 export default function StatementBackground() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -70,12 +69,14 @@ export default function StatementBackground() {
             dust={590}
             glow={0}
             reflections={0.45}
-            roadOpacity={0.1}
+            roadOpacity={0.06}
             steer={0.15}
             tailColors={TAIL_COLORS}
             headColors={HEAD_COLORS}
             poleColors={POLE_COLORS}
-            theme="dark"
+            roadColor="#f4f5fa"
+            lineColor="#dfe2ed"
+            theme="light"
             background="transparent"
             interactive
           />

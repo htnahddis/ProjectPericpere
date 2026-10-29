@@ -1,10 +1,16 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ComponentType } from "react";
 
-const Hyperspeed = dynamic(() => import("@/components/Hyperspeed"), { ssr: false });
+const WebThreads = dynamic(() => import("@/components/WebThreads"), {
+  ssr: false,
+}) as unknown as ComponentType<Record<string, unknown>>;
 
+/**
+ * Full-bleed hero WebGL: light-mode WebThreads on white.
+ * Brand indigo / magenta / cyan; reduced-motion → wash only.
+ */
 export default function HeroBackground() {
   const [reduceMotion, setReduceMotion] = useState(false);
   const [ready, setReady] = useState(false);
@@ -21,35 +27,37 @@ export default function HeroBackground() {
   return (
     <div className="hero-bg" aria-hidden="true">
       {ready && !reduceMotion ? (
-        <div className="hero-hyperspeed">
-          <Hyperspeed
-            curve="gentle"
-            curvature={0.45}
-            speed={0.65}
-            boost={1.8}
-            fov={92}
-            boostFov={106}
-            lanes={4}
-            roadWidth={16}
-            medianWidth={5}
-            density={56}
-            trailLength={0.8}
-            lightSize={0.65}
-            poles={12}
-            poleHeight={0.7}
-            dust={100}
-            glow={0.24}
-            reflections={0.12}
-            steer={0.08}
-            tailColors={["#1B1466", "#FF00B7", "#00B7FF"]}
-            headColors={["#00B7FF", "#1B1466"]}
-            poleColors={["#00B7FF"]}
-            roadColor="#f4f5fa"
-            roadOpacity={0.025}
-            lineColor="#dfe2ed"
-            background="transparent"
-            theme="light"
-            interactive={false}
+        <div className="hero-threads">
+          <WebThreads
+            colors={["#1B1466", "#FF00B7", "#00B7FF"]}
+            coreColor="#FFFFFF"
+            backgroundColor="transparent"
+            lightMode
+            threadCount={6}
+            spread={0.18}
+            speed={0.2}
+            frequency={5}
+            taper={1}
+            position={0.5}
+            pinch={0.5}
+            nodes={1}
+            angle={0}
+            glow={0.02}
+            falloff={0.6}
+            thickness={1.1}
+            brightness={0.6}
+            opacity={1}
+            depth={0}
+            pulses={0}
+            mirror
+            shimmer={false}
+            fade={0}
+            grain={0.05}
+            intro
+            mouseInteraction
+            mouseStrength={0.5}
+            pulseOnClick
+            paused={false}
           />
         </div>
       ) : null}
