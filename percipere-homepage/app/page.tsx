@@ -4,13 +4,13 @@ import Footer from "@/components/Footer";
 import Features10 from "@/components/Features10";
 import HeroBackground from "@/components/HeroBackground";
 import ProductCard from "@/components/ProductCard";
-import PhaseRail from "@/components/PhaseRail";
 import PrimaryCta from "@/components/PrimaryCta";
 import SectionReveal from "@/components/SectionReveal";
 import TextReveal from "@/components/TextReveal";
 import StatementReveal from "@/components/StatementReveal";
 import StatementBackground from "@/components/StatementBackground";
 import SuitesScrollExpand from "@/components/SuitesScrollExpand";
+import SapPhaseGallery from "@/components/SapPhaseGallery";
 import BlurText from "@/components/BlurText";
 import Magnet from "@/components/Magnet";
 import { PRODUCTS, SAP_PHASES, DEMO_HREF } from "@/lib/data";
@@ -110,37 +110,42 @@ export default function Home() {
         {/* 3. Product Suites — ScrollExpand + bento */}
         <section className="suites-section" id="suites" aria-labelledby="suites-title">
           <span id="suites-title" className="sr-only">The Product Suites</span>
-          <SuitesScrollExpand />
-          <SectionReveal as="div" className="wrap suites-bento" early>
-            <div className="row-head">
-              <h2 className="h2">Browse the suites</h2>
-              <a href="#next-steps" className="ulink">Talk through fit ↗</a>
-            </div>
-            <p className="section-lede">Four suites and a shared intelligence layer—each focused, all connected.</p>
-            <div className="bento-grid">
-              {BENTO_ORDER.map(slot => {
-                const product = byName[slot.name];
-                if (!product) return null;
-                return <ProductCard key={product.name} product={product} size={slot.size} />;
-              })}
-            </div>
-          </SectionReveal>
+          <SuitesScrollExpand
+            browseContent={
+              <div className="suites-bento">
+                <div className="row-head">
+                  <h2 className="h2">Browse the suites</h2>
+                  <a href="#next-steps" className="ulink">Talk through fit ↗</a>
+                </div>
+                <p className="section-lede">Four suites and a shared intelligence layer—each focused, all connected.</p>
+                <div className="bento-grid">
+                  {BENTO_ORDER.map(slot => {
+                    const product = byName[slot.name];
+                    if (!product) return null;
+                    return <ProductCard key={product.name} product={product} size={slot.size} />;
+                  })}
+                </div>
+              </div>
+            }
+          />
         </section>
 
-        {/* 4. SAP Transformation */}
-        <SectionReveal as="section" className="full-section wrap sap-transform" id="transformation" aria-labelledby="transform-title" early>
-          <div className="row-head compact">
-            <TextReveal
-              as="h2"
-              className="h2"
-              lines={[{ text: "How the ecosystem supports SAP transformation" }]}
-            />
-            <span id="transform-title" className="sr-only">How the ecosystem supports SAP transformation</span>
+        {/* 4. SAP Transformation — CircularGallery */}
+        <SectionReveal as="section" className="full-section sap-transform" id="transformation" aria-labelledby="transform-title" early>
+          <div className="wrap">
+            <div className="row-head compact">
+              <TextReveal
+                as="h2"
+                className="h2"
+                lines={[{ text: "How the ecosystem supports SAP transformation" }]}
+              />
+              <span id="transform-title" className="sr-only">How the ecosystem supports SAP transformation</span>
+            </div>
+            <p className="section-lede">
+              Across SAP Activate phases, PerciVerse keeps context continuous from discovery through realization.
+            </p>
           </div>
-          <p className="section-lede">
-            Across SAP Activate phases, PerciVerse keeps context continuous from discovery through realization.
-          </p>
-          <PhaseRail phases={SAP_PHASES} />
+          <SapPhaseGallery phases={SAP_PHASES} />
         </SectionReveal>
 
         {/* 5. Value & Next Steps */}

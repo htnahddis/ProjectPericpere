@@ -78,7 +78,18 @@ small{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--m
 .features10{display:grid;grid-template-columns:0.9fr 1.1fr;align-items:center;gap:32px;padding-top:96px;padding-bottom:40px}
 .features10-copy{max-width:540px}
 .features10 .eyebrow{margin-bottom:20px}
-.sap-transform{padding-bottom:24px}
+.sap-transform{padding-bottom:48px;width:100%}
+.sap-gallery{width:100%;margin-top:28px}
+.sap-gallery-stage{position:relative;width:100%;height:clamp(560px,72vh,720px);background:
+  radial-gradient(circle at 50% 30%,rgba(0,183,255,.08),transparent 42%),
+  radial-gradient(circle at 80% 70%,rgba(255,0,183,.06),transparent 40%),
+  linear-gradient(180deg,#f7f8fc,#fff 55%,#fbfbfe)}
+.sap-gallery-stage .circular-gallery{height:100%}
+.sap-gallery-detail{max-width:var(--max);margin:0 auto;padding:28px 24px 8px}
+.sap-gallery-detail h3{margin:12px 0 8px;font-size:clamp(20px,2.4vw,28px);letter-spacing:-.03em;font-weight:500}
+.sap-gallery-detail p{max-width:52ch;font-size:14px;line-height:1.6;color:var(--mute)}
+.sap-gallery-note{margin-top:14px!important;font-size:11px!important;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.sap-gallery--loading{min-height:560px}
 .value-next{padding-bottom:40px}
 .value-next .final{padding-top:72px}
 .orbit-stage{display:flex;justify-content:center;align-items:center;padding:14px 0}
@@ -234,21 +245,17 @@ small{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--m
 .suites-expand .scroll-expand{min-height:100vh;min-height:100svh}
 .suites-expand .scroll-expand__title{color:#fff;font-size:clamp(2rem,6vw,4.5rem);letter-spacing:-.04em;font-weight:400;text-shadow:0 8px 40px rgba(0,0,0,.45)}
 .suites-expand .scroll-expand__hint{color:rgba(255,255,255,.72);letter-spacing:.14em;text-transform:uppercase;font-size:11px}
-.suites-expand-overlay{max-width:720px;margin:0 auto;color:#fff;text-align:center}
-.suites-expand-overlay .eyebrow{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.2);background:transparent}
-.suites-expand-overlay .h2{color:#fff}
-.suites-expand-overlay .lede{color:rgba(255,255,255,.78);margin-left:auto;margin-right:auto}
-.suites-expand-links{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:10px;text-align:left}
-.suites-expand-links a{display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding:14px 16px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);transition:background .2s,border-color .2s}
-.suites-expand-links a:hover,.suites-expand-links a:focus-visible{background:rgba(255,255,255,.14);border-color:rgba(0,183,255,.35)}
-.suites-expand-links strong{font-weight:500;letter-spacing:-.02em}
-.suites-expand-links span{font-size:12px;color:rgba(255,255,255,.65)}
+.suites-browse-overlay{width:100%;height:100%;overflow-y:auto;color:#fff;text-align:left}
+.suites-browse-overlay .suites-bento{padding:0}
+.suites-browse-overlay .row-head{margin-top:0;border-color:rgba(255,255,255,.24)}
+.suites-browse-overlay .row-head .h2{color:#fff}
+.suites-browse-overlay .row-head .ulink{color:rgba(255,255,255,.82)}
+.suites-browse-overlay .section-lede{color:rgba(255,255,255,.78)}
 .suites-expand--static,.suites-expand--loading{min-height:100vh;min-height:100svh}
-.suites-expand-static-media{position:relative;min-height:100vh;min-height:100svh;display:grid;place-items:center;overflow:hidden}
+.suites-expand-static-media{position:relative;min-height:100vh;min-height:100svh;overflow:hidden}
 .suites-expand-static-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .suites-expand-static-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,12,20,.55),rgba(11,12,20,.78))}
-.suites-expand-static-media .suites-expand-overlay{position:relative;z-index:1;padding:48px 24px}
-.suites-bento{padding-top:56px;padding-bottom:24px}
+.suites-expand-static-media .suites-browse-overlay{position:absolute;inset:0;z-index:1;padding:clamp(24px,4vh,52px) clamp(24px,5vw,72px)}
 .product-preview img,.product-preview video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .3s}
 .product-preview video{z-index:1}
 .final{text-align:center;padding:140px 24px 120px}
