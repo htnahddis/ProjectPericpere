@@ -49,6 +49,11 @@
   -webkit-user-drag: none;
 }
 
+.scroll-expand__media--solid {
+  object-fit: unset;
+  -webkit-user-drag: unset;
+}
+
 .scroll-expand__scrim {
   position: absolute;
   inset: 0;

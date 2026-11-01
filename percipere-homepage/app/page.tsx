@@ -16,11 +16,11 @@ import Magnet from "@/components/Magnet";
 import { PRODUCTS, SAP_PHASES, DEMO_HREF } from "@/lib/data";
 
 const BENTO_ORDER: { name: string; size: "feature" | "wide" | "default" }[] = [
-  { name: "FUTUROOT", size: "feature" },
+  { name: "FUTUROOT", size: "default" },
   { name: "PerciXpert", size: "default" },
   { name: "PerciServe", size: "default" },
-  { name: "PerciHub", size: "wide" },
-  { name: "PerciSuite", size: "wide" },
+  { name: "PerciHub", size: "default" },
+  { name: "PerciSuite", size: "default" },
 ];
 
 export default function Home() {
@@ -130,22 +130,8 @@ export default function Home() {
           />
         </section>
 
-        {/* 4. SAP Transformation — always visible heading + PhaseRail; gallery enhances */}
+        {/* 4. SAP Transformation — one section: cards left, detail right */}
         <SectionReveal as="section" className="full-section sap-transform" id="transformation" aria-labelledby="transform-title" early>
-          <div className="wrap">
-            <div className="row-head compact">
-              <p className="eyebrow left">SAP Activate</p>
-              <TextReveal
-                as="h2"
-                className="h2"
-                lines={[{ text: "How the ecosystem supports SAP transformation" }]}
-              />
-              <span id="transform-title" className="sr-only">How the ecosystem supports SAP transformation</span>
-            </div>
-            <p className="section-lede">
-              Across SAP Activate phases, PerciVerse keeps context continuous from discovery through realization.
-            </p>
-          </div>
           <SapPhaseGallery phases={SAP_PHASES} />
         </SectionReveal>
 
