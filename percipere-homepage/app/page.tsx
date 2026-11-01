@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import Features10 from "@/components/Features10";
+import EcosystemOrbit from "@/components/EcosystemOrbit";
 import HeroBackground from "@/components/HeroBackground";
 import ProductCard from "@/components/ProductCard";
 import PrimaryCta from "@/components/PrimaryCta";
@@ -72,26 +72,41 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 2. The Ecosystem */}
-        <SectionReveal as="section" className="full-section wrap ecosystem features10" id="ecosystem" aria-labelledby="ecosystem-title" early>
-          <div className="features10-copy">
-            <p className="eyebrow left">The Ecosystem</p>
-            <TextReveal as="h2" className="h2" lines={[{ text: "One connected system" }]} />
-            <span id="ecosystem-title" className="sr-only">One connected system</span>
-            <BlurText
-              className="lede left"
-              text="FUTUROOT sits at the centre as the process intelligence layer that gives every suite shared enterprise context."
-              delay={55}
-              animateBy="words"
-              direction="bottom"
-              effect="focus"
-              blur={6}
-              distance={12}
-              stepDuration={0.24}
-              trigger="view"
-            />
+        {/* 2. One Connected System — OrbitImages only */}
+        <SectionReveal as="section" className="full-section ecosystem-orbit" id="ecosystem" aria-labelledby="ecosystem-title" early>
+          <div className="wrap ecosystem-orbit-frame">
+            <div className="ecosystem-orbit-head">
+              <p className="eyebrow left">One Connected System</p>
+              <TextReveal
+                as="h2"
+                className="h2"
+                lines={[
+                  { text: "One ecosystem." },
+                  { text: "Connected intelligence.", accent: "Connected" },
+                ]}
+              />
+              <span id="ecosystem-title" className="sr-only">One ecosystem. Connected intelligence.</span>
+            </div>
+
+            <div className="ecosystem-orbit-visual" aria-label="Connected PerciVerse products orbiting Percipere.ai">
+              <EcosystemOrbit />
+            </div>
+
+            <div className="ecosystem-orbit-support">
+              <BlurText
+                className="lede left ecosystem-orbit-lede"
+                text="PerciXpert, PerciServe and PerciBot work together through shared process intelligence—so context stays continuous across your SAP journey."
+                delay={55}
+                animateBy="words"
+                direction="bottom"
+                effect="focus"
+                blur={6}
+                distance={12}
+                stepDuration={0.24}
+                trigger="view"
+              />
+            </div>
           </div>
-          <Features10 />
         </SectionReveal>
 
         {/* Bridge statement — white + Hyperspeed */}
