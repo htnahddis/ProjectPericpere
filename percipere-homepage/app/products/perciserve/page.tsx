@@ -68,13 +68,13 @@ export default function PerciServePage() {
               </ul>
             </div>
             <TearTicket
-              image="/spectrum.jpg"
-              imageAlt="Visitors in a walkway of coloured glass"
+              image="/images/products/perciserve.jpg"
+              imageAlt="PerciServe support journey"
               stub={
                 <div>
-                  <h3>Admit one</h3>
-                  <p>Rooftop gallery · Until 30 Nov</p>
-                  <span>No. 284619</span>
+                  <h3>Support ticket</h3>
+                  <p>L1 answered · escalate with context</p>
+                  <span>PerciServe</span>
                 </div>
               }
               orientation="horizontal"
@@ -97,13 +97,13 @@ export default function PerciServePage() {
               tiltReach={260}
               parallax={6}
               perspective={1000}
-              background="#27272a"
+              background="#1B1466"
               color="#f5f5f5"
               border
               borderWidth={1}
               recenter
             >
-              <span>Spectrum</span>
+              <span>PerciServe</span>
             </TearTicket>
           </div>
           <div className="product-solution">
