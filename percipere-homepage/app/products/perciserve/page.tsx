@@ -7,6 +7,7 @@ import TextReveal from "@/components/TextReveal";
 import LightTunnel from "@/components/LightTunnel";
 import TearTicket from "@/components/TearTicket";
 import ProductCta from "@/components/product/ProductCta";
+import ServeCapabilityBento from "@/components/ServeCapabilityBento";
 import TeamChangeCards from "@/components/TeamChangeCards";
 import { PERCISERVE } from "@/lib/products/perciserve";
 
@@ -113,20 +114,12 @@ export default function PerciServePage() {
           </div>
         </SectionReveal>
 
-        <SectionReveal as="section" className="wrap product-section" early>
+        <SectionReveal as="section" className="wrap product-section serve-capabilities" early>
           <div className="row-head">
             <h2 className="h2">Built for the support path that actually happens</h2>
           </div>
           <p className="section-lede">Resolve routine work instantly. Escalate complex work without losing context.</p>
-          <div className="capability-grid">
-            {p.capabilities.map((cap, index) => (
-              <article key={cap.title} className="capability-tile" style={{ ["--i" as string]: index }}>
-                <small>0{index + 1}</small>
-                <h3>{cap.title}</h3>
-                <p>{cap.text}</p>
-              </article>
-            ))}
-          </div>
+          <ServeCapabilityBento capabilities={p.capabilities} />
         </SectionReveal>
 
 
