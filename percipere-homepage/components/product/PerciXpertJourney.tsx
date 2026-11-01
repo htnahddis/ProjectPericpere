@@ -1,18 +1,18 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import FolderFloat from "@/components/FolderFloat";
-import PaperCrumple, { type PaperCrumpleState } from "@/components/PaperCrumple";
+import Folder, { type FolderEntry } from "@/components/Folder";
 import RefineFrame, { type RefineFrameStatus } from "@/components/RefineFrame";
+import { PERCIXPERT } from "@/lib/products/percixpert";
 
-type Stage = 1 | 2 | 3 | 4;
+type Stage = 1 | 2 | 3 | 4 | 5;
+const STAGE_COUNT = PERCIXPERT.workflow.length;
 
-const INPUT_DOCUMENTS = [
-  "Company SOPs",
-  "Process manuals",
-  "Meeting transcripts",
-  "Workshop notes",
-  "Connected data",
+const INVESTIGATION_ITEMS: FolderEntry[] = [
+  { title: "Process manuals", description: "AS-IS process steps and ownership" },
+  { title: "Workshop notes", description: "Questions, decisions, and open points" },
+  { title: "Company SOPs", description: "Controls and documented procedures" },
+  { title: "Process hierarchy", description: "L0–L3 areas for focused review" },
 ];
 
 const REQUIREMENTS = [
@@ -29,44 +29,21 @@ const RFP_PREVIEW = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height
 <path d="M176 64a18 18 0 0 1 18-18h812a18 18 0 0 1 18 18v48H176z" fill="#1b1466"/>
 <circle cx="210" cy="79" r="7" fill="#ff00b7"/><circle cx="234" cy="79" r="7" fill="#00b7ff"/><circle cx="258" cy="79" r="7" fill="#fff" opacity=".8"/>
 <text x="220" y="166" fill="#777" font-family="Arial,sans-serif" font-size="17" letter-spacing="3">ILLUSTRATIVE OUTPUT · FOR REVIEW</text>
-<text x="220" y="218" fill="#1b1466" font-family="Arial,sans-serif" font-size="36" font-weight="600">ERP requirements brief</text>
-<text x="220" y="253" fill="#626273" font-family="Arial,sans-serif" font-size="18">Evidence-linked requirements and assessment inputs</text>
+<text x="220" y="218" fill="#1b1466" font-family="Arial,sans-serif" font-size="36" font-weight="600">RFP &amp; partner brief</text>
+<text x="220" y="253" fill="#626273" font-family="Arial,sans-serif" font-size="18">Evidence-linked requirements and partner selection inputs</text>
 <rect x="220" y="296" width="760" height="1" fill="#e5e5eb"/>
 <text x="220" y="342" fill="#1b1466" font-family="Arial,sans-serif" font-size="17" font-weight="600">01  Validated requirements</text>
 <rect x="220" y="365" width="760" height="44" rx="8" fill="#f7f7fa"/>
 <rect x="242" y="381" width="13" height="13" rx="4" fill="#ff00b7"/><rect x="270" y="382" width="350" height="10" rx="5" fill="#d9d9e2"/>
 <rect x="220" y="418" width="760" height="44" rx="8" fill="#f7f7fa"/>
 <rect x="242" y="434" width="13" height="13" rx="4" fill="#00b7ff"/><rect x="270" y="435" width="470" height="10" rx="5" fill="#d9d9e2"/>
-<text x="220" y="514" fill="#1b1466" font-family="Arial,sans-serif" font-size="17" font-weight="600">02  Fit-Gap findings and recommendations</text>
+<text x="220" y="514" fill="#1b1466" font-family="Arial,sans-serif" font-size="17" font-weight="600">02  Partner selection discussion</text>
 <rect x="220" y="538" width="760" height="76" rx="10" fill="#fbfbfd" stroke="#e5e5eb"/>
-<text x="244" y="570" fill="#626273" font-family="Arial,sans-serif" font-size="15">Assessment evidence</text><text x="244" y="595" fill="#626273" font-family="Arial,sans-serif" font-size="15">Future-state process · RFP-ready inputs · Partner discussion</text>
+<text x="244" y="570" fill="#626273" font-family="Arial,sans-serif" font-size="15">Selection criteria and evidence</text><text x="244" y="595" fill="#626273" font-family="Arial,sans-serif" font-size="15">RFP-ready inputs · consultant-led partner review</text>
 <rect x="220" y="650" width="184" height="34" rx="17" fill="#eefaff"/><text x="244" y="673" fill="#1b1466" font-family="Arial,sans-serif" font-size="14">Ready for consultant review</text>
 </svg>`;
 
 const RFP_PREVIEW_SRC = `data:image/svg+xml,${encodeURIComponent(RFP_PREVIEW)}`;
-
-const STAGE_COPY: Record<Stage, { title: string; description: string }> = {
-  1: {
-    title: "Connect & Read",
-    description:
-      "PerciXpert reads company documents and workshop information to establish an evidence base. FUTUROOT separately provides process intelligence.",
-  },
-  2: {
-    title: "Map & Pinpoint",
-    description:
-      "Turn fragmented information into AS-IS process flows and focused, evidence-led workshops—reducing manual preparation, not workshops.",
-  },
-  3: {
-    title: "Build & Assess",
-    description:
-      "Convert validated workshop findings into prioritised requirements, then assess ERP options against the same business needs.",
-  },
-  4: {
-    title: "Recommend & Generate",
-    description:
-      "Build practical recommendations, future-state processes and RFP-ready inputs from reviewed evidence for the consulting team.",
-  },
-};
 
 export default function PerciXpertJourney() {
   const [stage, setStage] = useState<Stage>(1);
@@ -84,7 +61,7 @@ export default function PerciXpertJourney() {
 
     const advanceStage = (direction: 1 | -1) => {
       const nextStage = stageRef.current + direction;
-      if (nextStage < 1 || nextStage > 4) return false;
+      if (nextStage < 1 || nextStage > STAGE_COUNT) return false;
       setStage(nextStage as Stage);
       return true;
     };
@@ -139,7 +116,7 @@ export default function PerciXpertJourney() {
     };
   }, []);
 
-  const copy = STAGE_COPY[stage];
+  const copy = PERCIXPERT.workflow[stage - 1];
 
   return (
     <section ref={sectionRef} className="xpert-journey" aria-labelledby="xpert-journey-title">
@@ -153,43 +130,20 @@ export default function PerciXpertJourney() {
 
       <div className="xpert-journey-stage" key={stage} aria-live="polite">
         <header className="xpert-journey-stage-head">
-          <span>0{stage} / 04</span>
+          <span>{copy.step} / {String(STAGE_COUNT).padStart(2, "0")}</span>
           <h3>{copy.title}</h3>
-          <p>{copy.description}</p>
+          <p>{copy.text}</p>
         </header>
 
-        {stage === 1 && (
-          <div className="xpert-journey-folder" aria-label="Illustrative company evidence inputs">
-            <p className="xpert-journey-visual-label">Example evidence inputs</p>
-            <FolderFloat
-              items={INPUT_DOCUMENTS}
-              label="Company evidence"
-              sublabel="documents · workshops · information"
-              defaultOpen
-              closeOnSelect={false}
-              physics={false}
-              drift={0.35}
-              folderColor="#1b1466"
-              frontColor="#28217a"
-              paperColor="#ffffff"
-              itemColor="#ffffff"
-              itemTextColor="#1b1466"
-              labelColor="#ffffff"
-              width={250}
-              height={190}
-              radius={18}
-              spread={120}
-              lift={30}
-              tilt={5}
-            />
-          </div>
-        )}
+        {stage === 1 && <ConnectAnalyseVisual />}
 
-        {stage === 2 && <PaperDiscoveryVisual />}
+        {stage === 2 && <InvestigateVisual />}
 
         {stage === 3 && <FitGapVisual />}
 
-        {stage === 4 && <RecommendationVisual />}
+        {stage === 4 && <CompareErpsVisual />}
+
+        {stage === 5 && <RecommendationVisual />}
 
         <nav className="xpert-journey-actions" aria-label="Walkthrough navigation">
           <button
@@ -205,8 +159,8 @@ export default function PerciXpertJourney() {
             className="xpert-journey-chevron"
             type="button"
             aria-label="Next stage"
-            onClick={() => setStage((current) => Math.min(4, current + 1) as Stage)}
-            disabled={stage === 4}
+            onClick={() => setStage((current) => Math.min(STAGE_COUNT, current + 1) as Stage)}
+            disabled={stage === STAGE_COUNT}
           >
             <Chevron direction="right" />
           </button>
@@ -216,73 +170,61 @@ export default function PerciXpertJourney() {
   );
 }
 
-function PaperDiscoveryVisual() {
-  const [revealed, setRevealed] = useState(false);
+function ConnectAnalyseVisual() {
+  const [reduceMotion, setReduceMotion] = useState(false);
 
-  const handlePaperState = (state: PaperCrumpleState) => {
-    setRevealed(state !== "flat");
-  };
+  useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduceMotion(query.matches);
+    sync();
+    query.addEventListener?.("change", sync);
+    return () => query.removeEventListener?.("change", sync);
+  }, []);
 
   return (
-    <div className="xpert-journey-paper" aria-label="Illustrative process discovery transition">
-      <div className={`xpert-process-screen${revealed ? " is-revealed" : ""}`}>
-        <div className="xpert-process-toolbar">
-          <span>PROCESS DISCOVERY · SAMPLE VIEW</span>
-          <span>L0 — L3</span>
-        </div>
-        <div className="xpert-process-content">
-          <div className="xpert-process-flow" aria-label="Illustrative AS-IS process flow">
-            <span>Purchase request</span><i aria-hidden="true">→</i><span>Review &amp; approve</span><i aria-hidden="true">→</i><span>Record invoice</span>
-          </div>
-          <div className="xpert-process-details">
-            <div>
-              <small>PROCESS HIERARCHY</small>
-              <strong>Procure to pay</strong>
-              <span>L0 · L1 · L2 · L3</span>
-            </div>
-            <div>
-              <small>PINPOINTED FOR DISCUSSION</small>
-              <strong>Manual invoice review</strong>
-              <span>Review workshop evidence and decisions</span>
-            </div>
-            <div>
-              <small>WORKSHOP QUESTION &amp; DECISION</small>
-              <strong>Where does manual review repeat?</strong>
-              <span>Decision: validate controls with the process owner</span>
-            </div>
-            <div>
-              <small>SOURCE EVIDENCE</small>
-              <strong>Workshop notes · SOP</strong>
-              <span>Illustrative inputs · not customer data</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="xpert-paper-sheet">
-        <PaperCrumple
-          src="/images/products/percixpert.jpg"
-          alt="Illustrative business documents and spreadsheet inputs"
-          width={500}
-          height={360}
-          sceneHeight={340}
-          imageFit="cover"
-          releaseBehavior="stay"
-          crumpleAmount={0.92}
-          crumpleDuration={620}
-          releaseDuration={420}
-          foldCount={18}
-          wrinkleDepth={0.58}
-          paperTexture={0.42}
-          draggable
-          returnToOrigin
-          resetKey="process-discovery"
-          onStateChange={handlePaperState}
-          className="xpert-paper-crumple"
-        />
-      </div>
-      <p className="xpert-journey-visual-label">
-        Optional: hold and drag the example sheet to reveal the structured process view.
-      </p>
+    <figure className="xpert-connect-visual">
+      <video
+        key={reduceMotion ? "static" : "motion"}
+        className="xpert-connect-video"
+        autoPlay={!reduceMotion}
+        loop={!reduceMotion}
+        muted
+        playsInline
+        poster="/images/products/futuroot.jpg"
+        role="img"
+        aria-label="FUTUROOT process intelligence product animation"
+      >
+        {!reduceMotion && <source src="/media/products/futuroot.mp4" type="video/mp4" />}
+      </video>
+      <figcaption className="xpert-journey-visual-label">
+        FUTUROOT process intelligence · illustrative product view
+      </figcaption>
+    </figure>
+  );
+}
+
+function InvestigateVisual() {
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+
+  return (
+    <div className="xpert-investigate">
+      <p className="xpert-journey-visual-label">Open the example evidence set to explore investigation inputs</p>
+      <Folder
+        label="Process evidence"
+        items={INVESTIGATION_ITEMS}
+        onItemClick={(item) => {
+          if (typeof item === "object" && item !== null && "title" in item) {
+            setSelectedItem(item.title ?? null);
+          }
+        }}
+        mode="book"
+        variant="glass"
+        color="#7aa7ff"
+        theme="dark"
+        size={1.4}
+        className="xpert-investigate-folder"
+      />
+      {selectedItem && <p className="xpert-investigate-selected" aria-live="polite">Selected: {selectedItem}</p>}
     </div>
   );
 }
@@ -307,7 +249,7 @@ function FitGapVisual() {
               <th scope="col">Process / requirement</th>
               <th scope="col">Type</th>
               <th scope="col">Priority</th>
-              {ERP_OPTIONS.map((erp) => <th scope="col" key={erp}>{erp}</th>)}
+              <th scope="col">Assessment</th>
             </tr>
           </thead>
           <tbody>
@@ -316,6 +258,38 @@ function FitGapVisual() {
                 <th scope="row"><small>{item.process}</small>{item.requirement}</th>
                 <td>{item.type}</td>
                 <td><span className="xpert-fit-gap-priority">{item.priority}</span></td>
+                <td><span className="xpert-fit-gap-pending">Awaiting validation</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="xpert-journey-visual-label">
+        Interface illustration only · no ERP scores or customer assessment results shown.
+      </p>
+    </div>
+  );
+}
+
+function CompareErpsVisual() {
+  return (
+    <div className="xpert-compare">
+      <div className="xpert-fit-gap-topline">
+        <span>ERP COMPARISON · ILLUSTRATIVE</span>
+        <span>One shared requirement set</span>
+      </div>
+      <div className="xpert-compare-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Requirement</th>
+              {ERP_OPTIONS.map((erp) => <th scope="col" key={erp}>{erp}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {REQUIREMENTS.map((item) => (
+              <tr key={item.requirement}>
+                <th scope="row"><small>{item.process}</small>{item.requirement}</th>
                 {ERP_OPTIONS.map((erp) => (
                   <td key={erp}><span className="xpert-fit-gap-pending">Not assessed</span></td>
                 ))}
@@ -325,7 +299,7 @@ function FitGapVisual() {
         </table>
       </div>
       <p className="xpert-journey-visual-label">
-        Interface illustration only · no ERP scores or customer assessment results shown.
+        Comparison layout only · FIT, PARTIAL, and GAP remain unassessed until evidence is reviewed.
       </p>
     </div>
   );
@@ -365,7 +339,7 @@ function RecommendationVisual() {
         }}
         className="xpert-refine-frame"
       >
-        <img src={RFP_PREVIEW_SRC} alt="Illustrative evidence-linked ERP requirements brief" />
+        <img src={RFP_PREVIEW_SRC} alt="Illustrative RFP and partner selection brief" />
       </RefineFrame>
       <p className="xpert-journey-visual-label">
         Recommendations support consultant review; they do not automatically select an ERP partner.

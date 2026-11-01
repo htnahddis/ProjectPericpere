@@ -35,8 +35,8 @@ export default function ProductHeroBg({ variant }: { variant: Variant }) {
       <div className="product-hero-bg" aria-hidden="true">
         <div className="product-hero-canvas">
           <Lightfall
-            colors={["#00B7FF", "#FF00B7", "#1B1466", "#FFFFFF"]}
-            backgroundColor="#ffffff"
+            colors={["#ffffff"]}
+            backgroundColor="#94a3b8"
             speed={0.3}
             streakCount={2}
             streakWidth={0.8}
@@ -44,7 +44,6 @@ export default function ProductHeroBg({ variant }: { variant: Variant }) {
             backgroundGlow={0.1}
             headGlow={0.6}
             bloom={0.35}
-            lightMode
             mouseInteraction
             holdToWarp
             intro

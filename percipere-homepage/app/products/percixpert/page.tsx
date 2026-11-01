@@ -7,7 +7,7 @@ import TextReveal from "@/components/TextReveal";
 import ProductCta from "@/components/product/ProductCta";
 import ProductHeroBg from "@/components/product/ProductHeroBg";
 import PerciXpertJourney from "@/components/product/PerciXpertJourney";
-import WorkflowSteps from "@/components/product/WorkflowSteps";
+import TeamChangeCards from "@/components/TeamChangeCards";
 import XpertCapabilityBento from "@/components/XpertCapabilityBento";
 import { PERCIXPERT } from "@/lib/products/percixpert";
 
@@ -87,29 +87,13 @@ export default function PerciXpertPage() {
           </SectionMotion>
         </section>
 
-        <section className="wrap product-section product-workflow">
+        <section className="wrap product-section product-close team-change-section">
           <SectionMotion>
             <div className="row-head">
-              <h2 className="h2">One connected journey</h2>
+              <h2 className="h2">What changes for the team</h2>
             </div>
-            <p className="section-lede">Every step builds on the last—findings, requirements, Fit-Gap, and RFP stay linked.</p>
-            <WorkflowSteps steps={p.workflow} />
-          </SectionMotion>
-        </section>
-
-        <section className="wrap product-section product-close">
-          <SectionMotion>
-            <div className="row-head">
-              <h2 className="h2">What you leave with</h2>
-            </div>
-            <div className="outcome-grid">
-              {p.outcomes.map(item => (
-                <article key={item.title} className="outcome-tile">
-                  <h3>{item.title}</h3>
-                  <p>{item.text}</p>
-                </article>
-              ))}
-            </div>
+            <p className="section-lede">Focused investigation, traceable decisions, and ERP choices grounded in reviewed evidence.</p>
+            <TeamChangeCards outcomes={p.outcomes} imageSrc="/images/products/percixpert.jpg" />
             <div className="product-final">
               <p className="lede left">Ready to ground your next ERP decision in evidence?</p>
               <div className="ctas product-ctas">

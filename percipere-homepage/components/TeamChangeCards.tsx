@@ -19,7 +19,13 @@ const OUTCOME_IMAGES = [
  * “What changes for the team” — one restrained TiltedCard per outcome.
  * Front: brand product still + title layer. Back: outcome body.
  */
-export default function TeamChangeCards({ outcomes }: { outcomes: readonly Outcome[] }) {
+export default function TeamChangeCards({
+  outcomes,
+  imageSrc,
+}: {
+  outcomes: readonly Outcome[];
+  imageSrc?: string;
+}) {
   const [reduceMotion, setReduceMotion] = useState(false);
 
   useEffect(() => {
@@ -35,7 +41,7 @@ export default function TeamChangeCards({ outcomes }: { outcomes: readonly Outco
       {outcomes.map((item, index) => (
         <TiltedCard
           key={item.title}
-          imageSrc={OUTCOME_IMAGES[index % OUTCOME_IMAGES.length]}
+          imageSrc={imageSrc ?? OUTCOME_IMAGES[index % OUTCOME_IMAGES.length]}
           altText={item.title}
           captionText={item.title}
           containerHeight="280px"

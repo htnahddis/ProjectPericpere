@@ -36,8 +36,8 @@ export default function ServeCapabilityBento({
         title: cap.title,
         description: cap.text,
         visual: VISUALS[index % VISUALS.length],
-        colSpan: 1,
-        rowSpan: 1,
+        colSpan: index < 2 ? 2 : 1,
+        rowSpan: index === 0 ? 2 : 1,
       })),
     [capabilities]
   );
