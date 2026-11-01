@@ -1,5 +1,7 @@
 // All copy lives here so it can be swapped for the project's real content.
 
+export const slugify = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
 /** Live contact destination used by primary conversion CTAs. */
 export const CONTACT_HREF = "https://percipere.co/contact-us/";
 /** Alias kept for existing imports (nav, footer CTAs). */
@@ -24,19 +26,19 @@ export const NAV = [
 ];
 
 export const PRODUCTS = [
-  { name: "PerciXpert", tag: "ERP assessment & decisions", href: "/products/percixpert",
+  { name: "PerciXpert", slug: slugify("PerciXpert"), tag: "ERP assessment & decisions", href: "/products/percixpert",
     img: "/images/percixpert.svg", video: "/media/products/percixpert.mp4", poster: "/images/products/percixpert.jpg",
     desc: "Evidence-led assessment: discovery, AS-IS, requirements, Fit-Gap, ERP comparison, and RFP-ready structure." },
-  { name: "PerciServe", tag: "Operations & support", href: "/products/perciserve",
+  { name: "PerciServe", slug: slugify("PerciServe"), tag: "Operations & support", href: "/products/perciserve",
     img: "/images/perciserve.svg", video: "/media/products/perciserve.mp4", poster: "/images/products/perciserve.jpg",
     desc: "Instant L1 from connected knowledge—and context-rich escalation when a specialist is needed." },
-  { name: "PerciHub", tag: "Context-aware agents", href: "/#product-percihub",
+  { name: "PerciHub", slug: slugify("PerciHub"), tag: "Context-aware agents", href: "/#product-percihub",
     img: "/images/percihub.svg", video: "/media/products/percihub.mp4", poster: "/images/products/percihub.jpg",
     desc: "Deploy agents that act on live enterprise context across finance, supply chain, and service." },
-  { name: "PerciSuite", tag: "Focused applications", href: "/#product-percisuite",
+  { name: "PerciSuite", slug: slugify("PerciSuite"), tag: "Focused applications", href: "/#product-percisuite",
     img: "/images/percisuite.svg", video: "/media/products/percisuite.mp4", poster: "/images/products/percisuite.jpg",
     desc: "A suite of focused applications built for enterprise execution." },
-  { name: "FUTUROOT", tag: "Process intelligence layer", href: "/#product-futuroot",
+  { name: "FUTUROOT", slug: slugify("FUTUROOT"), tag: "Process intelligence layer", href: "/#product-futuroot",
     img: "/images/futuroot.svg", video: "/media/products/futuroot.mp4", poster: "/images/products/futuroot.jpg",
     desc: "The process intelligence layer that gives every suite shared enterprise context." },
 ];
