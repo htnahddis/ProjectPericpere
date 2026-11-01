@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import SectionReveal from "@/components/SectionReveal";
+import SectionMotion from "@/components/SectionMotion";
 import TextReveal from "@/components/TextReveal";
 import LightTunnel from "@/components/LightTunnel";
 import TearTicket from "@/components/TearTicket";
 import ProductCta from "@/components/product/ProductCta";
+import SupportJourney from "@/components/product/SupportJourney";
 import ServeCapabilityBento from "@/components/ServeCapabilityBento";
 import TeamChangeCards from "@/components/TeamChangeCards";
 import { PERCISERVE } from "@/lib/products/perciserve";
@@ -57,7 +58,8 @@ export default function PerciServePage() {
           </div>
         </section>
 
-        <SectionReveal as="section" className="wrap product-section" early>
+        <section className="wrap product-section">
+          <SectionMotion>
           <div className="product-split">
             <div>
               <p className="eyebrow left">Problem</p>
@@ -112,18 +114,28 @@ export default function PerciServePage() {
             <h2 className="h2">{p.solution.title}</h2>
             <p>{p.solution.text}</p>
           </div>
-        </SectionReveal>
+        </SectionMotion>
+        </section>
 
-        <SectionReveal as="section" className="wrap product-section serve-capabilities" early>
+        <section className="wrap">
+          <SectionMotion staggerChildren={false}>
+            <SupportJourney />
+          </SectionMotion>
+        </section>
+
+        <section className="wrap product-section serve-capabilities">
+          <SectionMotion>
           <div className="row-head">
             <h2 className="h2">Built for the support path that actually happens</h2>
           </div>
           <p className="section-lede">Resolve routine work instantly. Escalate complex work without losing context.</p>
           <ServeCapabilityBento capabilities={p.capabilities} />
-        </SectionReveal>
+        </SectionMotion>
+        </section>
 
 
-        <SectionReveal as="section" className="wrap product-section product-close team-change-section" early>
+        <section className="wrap product-section product-close team-change-section">
+          <SectionMotion>
           <div className="row-head">
             <h2 className="h2">What changes for the team</h2>
           </div>
@@ -136,7 +148,8 @@ export default function PerciServePage() {
               <Link href="/products/percixpert" className="ulink">See PerciXpert →</Link>
             </div>
           </div>
-        </SectionReveal>
+        </SectionMotion>
+        </section>
       </main>
       <Footer />
     </>

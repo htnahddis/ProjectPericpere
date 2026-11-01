@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import SectionReveal from "@/components/SectionReveal";
+import SectionMotion from "@/components/SectionMotion";
 import TextReveal from "@/components/TextReveal";
 import EvidenceFlow from "@/components/product/EvidenceFlow";
 import ProductCta from "@/components/product/ProductCta";
 import ProductHeroBg from "@/components/product/ProductHeroBg";
+import PerciXpertJourney from "@/components/product/PerciXpertJourney";
 import WorkflowSteps from "@/components/product/WorkflowSteps";
 import { PERCIXPERT } from "@/lib/products/percixpert";
 
@@ -46,7 +47,8 @@ export default function PerciXpertPage() {
           </div>
         </section>
 
-        <SectionReveal as="section" className="wrap product-section" early>
+        <section className="wrap product-section">
+          <SectionMotion>
           <div className="product-split">
             <div>
               <p className="eyebrow left">Problem</p>
@@ -67,9 +69,17 @@ export default function PerciXpertPage() {
               </div>
             </div>
           </div>
-        </SectionReveal>
+        </SectionMotion>
+        </section>
 
-        <SectionReveal as="section" className="wrap product-section" early>
+        <section className="wrap">
+          <SectionMotion staggerChildren={false}>
+            <PerciXpertJourney />
+          </SectionMotion>
+        </section>
+
+        <section className="wrap product-section">
+          <SectionMotion>
           <div className="row-head">
             <h2 className="h2">What PerciXpert structures</h2>
           </div>
@@ -83,17 +93,21 @@ export default function PerciXpertPage() {
               </article>
             ))}
           </div>
-        </SectionReveal>
+        </SectionMotion>
+        </section>
 
-        <SectionReveal as="section" className="wrap product-section product-workflow" early>
+        <section className="wrap product-section product-workflow">
+          <SectionMotion>
           <div className="row-head">
             <h2 className="h2">One connected journey</h2>
           </div>
           <p className="section-lede">Every step builds on the last—findings, requirements, Fit-Gap, and RFP stay linked.</p>
           <WorkflowSteps steps={p.workflow} />
-        </SectionReveal>
+        </SectionMotion>
+        </section>
 
-        <SectionReveal as="section" className="wrap product-section product-close" early>
+        <section className="wrap product-section product-close">
+          <SectionMotion>
           <div className="row-head">
             <h2 className="h2">What you leave with</h2>
           </div>
@@ -112,7 +126,8 @@ export default function PerciXpertPage() {
               <Link href="/products/perciserve" className="ulink">See PerciServe →</Link>
             </div>
           </div>
-        </SectionReveal>
+        </SectionMotion>
+        </section>
       </main>
       <Footer />
     </>

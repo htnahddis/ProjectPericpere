@@ -1,13 +1,33 @@
 "use client";
 
-import { ReactLenis } from "lenis/react";
-import type { ReactNode } from "react";
+import { ReactLenis, useLenis } from "lenis/react";
+import { useEffect, type ReactNode } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "lenis/dist/lenis.css";
+
+gsap.registerPlugin(ScrollTrigger);
+
+/** Keep GSAP ScrollTrigger in sync with the single Lenis root (AnimatedContent). */
+function LenisScrollTriggerSync() {
+  useLenis(() => {
+    ScrollTrigger.update();
+  });
+
+  useEffect(() => {
+    ScrollTrigger.refresh();
+    return () => {
+      ScrollTrigger.clearScrollMemory?.();
+    };
+  }, []);
+
+  return null;
+}
 
 /**
  * Single page-level Lenis instance.
  * Anchors stay in sync with sticky nav (html scroll-padding-top).
- * Lenis respects prefers-reduced-motion via respectReducedMotion.
+ * Respects prefers-reduced-motion via respectReducedMotion.
  */
 export default function SmoothScroll({ children }: { children: ReactNode }) {
   return (
@@ -15,16 +35,15 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
       root
       options={{
         autoRaf: true,
-        lerp: 0.09,
-        duration: 1.05,
+        lerp: 0.08,
         smoothWheel: true,
-        syncTouch: false,
-        touchMultiplier: 1.4,
+        wheelMultiplier: 1,
+        touchMultiplier: 1,
         anchors: true,
-        stopInertiaOnNavigate: true,
         respectReducedMotion: true,
       }}
     >
+      <LenisScrollTriggerSync />
       {children}
     </ReactLenis>
   );
