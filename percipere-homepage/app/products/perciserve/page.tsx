@@ -4,10 +4,10 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import SectionReveal from "@/components/SectionReveal";
 import TextReveal from "@/components/TextReveal";
+import LightTunnel from "@/components/LightTunnel";
+import TearTicket from "@/components/TearTicket";
 import ProductCta from "@/components/product/ProductCta";
-import ProductHeroBg from "@/components/product/ProductHeroBg";
-import SupportFlow from "@/components/product/SupportFlow";
-import WorkflowSteps from "@/components/product/WorkflowSteps";
+import TeamChangeCards from "@/components/TeamChangeCards";
 import { PERCISERVE } from "@/lib/products/perciserve";
 
 export const metadata: Metadata = {
@@ -23,17 +23,28 @@ export default function PerciServePage() {
       <Nav />
       <main className="product-page product-page--serve">
         <section className="product-hero product-hero--bleed">
-          <ProductHeroBg variant="serve" />
+          <div className="serve-light-tunnel" aria-hidden="true">
+            <LightTunnel
+              cableColor="#1b1466"
+              pulseColor="#00b7ff"
+              tunnelColor="#ffffff"
+              cableCount={56}
+              pulseDensity={0.5}
+              flowDirection="inward"
+              mouseInteraction
+              clickSurge
+              lightMode
+            />
+          </div>
           <div className="wrap product-hero-grid">
             <div className="product-hero-copy">
-              <p className="eyebrow left">{p.eyebrow}</p>
               <p className="brand-signal product-brand">{p.name}</p>
               <TextReveal
                 as="h1"
                 className="h1 sm"
                 lines={[
                   { text: "Instant L1.", accent: "Instant" },
-                  { text: "Context-rich escalation when it matters." },
+                  { text: "Context-rich escalation" },
                 ]}
               />
               <p className="lede left product-lede">{p.support}</p>
@@ -42,7 +53,6 @@ export default function PerciServePage() {
                 <Link href="/#suites" className="btn btn-line">Back to suites</Link>
               </div>
             </div>
-            <SupportFlow />
           </div>
         </section>
 
@@ -57,11 +67,49 @@ export default function PerciServePage() {
                 ))}
               </ul>
             </div>
-            <div className="product-solution">
-              <p className="eyebrow left">Solution</p>
-              <h2 className="h2">{p.solution.title}</h2>
-              <p>{p.solution.text}</p>
-            </div>
+            <TearTicket
+              image="/spectrum.jpg"
+              imageAlt="Visitors in a walkway of coloured glass"
+              stub={
+                <div>
+                  <h3>Admit one</h3>
+                  <p>Rooftop gallery · Until 30 Nov</p>
+                  <span>No. 284619</span>
+                </div>
+              }
+              orientation="horizontal"
+              scrim
+              imageRadius={8}
+              width={460}
+              height={250}
+              stubSize={150}
+              radius={16}
+              holes={12}
+              holeSize={6}
+              notch={3}
+              roughness={0}
+              tearAngle={30}
+              stretch={30}
+              resistance={0.45}
+              rotate={4}
+              tilt
+              tiltMax={9}
+              tiltReach={260}
+              parallax={6}
+              perspective={1000}
+              background="#27272a"
+              color="#f5f5f5"
+              border
+              borderWidth={1}
+              recenter
+            >
+              <span>Spectrum</span>
+            </TearTicket>
+          </div>
+          <div className="product-solution">
+            <p className="eyebrow left">Solution</p>
+            <h2 className="h2">{p.solution.title}</h2>
+            <p>{p.solution.text}</p>
           </div>
         </SectionReveal>
 
@@ -81,27 +129,13 @@ export default function PerciServePage() {
           </div>
         </SectionReveal>
 
-        <SectionReveal as="section" className="wrap product-section product-workflow" early>
-          <div className="row-head">
-            <h2 className="h2">Question → answer or expert handoff</h2>
-          </div>
-          <p className="section-lede">One journey from the first user question to resolution—and knowledge that compounds.</p>
-          <WorkflowSteps steps={p.workflow} />
-          <p className="product-note">{p.note}</p>
-        </SectionReveal>
 
-        <SectionReveal as="section" className="wrap product-section product-close" early>
+        <SectionReveal as="section" className="wrap product-section product-close team-change-section" early>
           <div className="row-head">
             <h2 className="h2">What changes for the team</h2>
           </div>
-          <div className="outcome-grid">
-            {p.outcomes.map(item => (
-              <article key={item.title} className="outcome-tile">
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
-              </article>
-            ))}
-          </div>
+          <p className="section-lede">Clearer L1 coverage, protected specialist time, and handoffs that keep context intact.</p>
+          <TeamChangeCards outcomes={p.outcomes} />
           <div className="product-final">
             <p className="lede left">Want to see where PerciServe would clear L1 in your landscape?</p>
             <div className="ctas product-ctas">
