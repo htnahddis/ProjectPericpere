@@ -1,0 +1,231 @@
+.tear-ticket {
+  position: relative;
+  display: flex;
+  flex: none;
+  width: min(var(--ticket-width), 100%);
+  height: var(--ticket-height);
+  overflow: hidden;
+  border: var(--ticket-border-width) solid rgba(255,255,255,.35);
+  border-radius: var(--ticket-radius);
+  background: var(--ticket-background);
+  color: var(--ticket-color);
+  cursor: pointer;
+  transform: perspective(var(--ticket-perspective)) rotate(var(--ticket-rotate)) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transform-style: preserve-3d;
+  transition: transform var(--tear-resistance) ease, opacity .5s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tear-ticket:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+.tear-ticket--horizontal {
+  flex-direction: row;
+}
+
+.tear-ticket--vertical {
+  flex-direction: column;
+}
+
+.tear-ticket-image {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  align-items: flex-end;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 15% 15%, rgba(255,0,183,.85), transparent 34%),
+    radial-gradient(ellipse at 82% 25%, rgba(0,183,255,.9), transparent 32%),
+    radial-gradient(ellipse at 52% 85%, rgba(255,195,0,.8), transparent 40%),
+    linear-gradient(135deg, #261455, #0d697a 52%, #8d1d75);
+  transition: transform var(--tear-resistance) ease;
+}
+
+.tear-ticket--horizontal .tear-ticket-image {
+  border-radius: var(--image-radius) 0 0 var(--image-radius);
+}
+
+.tear-ticket--vertical .tear-ticket-image {
+  flex-basis: calc(100% - var(--stub-size));
+  border-radius: var(--image-radius) var(--image-radius) 0 0;
+}
+
+.tear-ticket-image::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background-image: repeating-linear-gradient(45deg, transparent 0 2px, rgba(255,255,255,.25) 2px 3px);
+  content: "";
+  opacity: var(--roughness);
+  pointer-events: none;
+}
+
+.tear-ticket-image img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(var(--parallax-x), var(--parallax-y));
+  transition: transform var(--tear-resistance) ease;
+}
+
+.tear-ticket-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 38%, rgba(0,0,0,.66));
+}
+
+.tear-ticket-title {
+  position: relative;
+  z-index: 1;
+  padding: 22px;
+  font-size: 24px;
+  font-weight: 600;
+  text-shadow: 0 2px 12px rgba(0,0,0,.55);
+}
+
+.tear-ticket-seam {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-evenly;
+  background: var(--ticket-background);
+}
+
+.tear-ticket--horizontal .tear-ticket-seam {
+  width: calc(var(--hole-size) + 10px);
+  flex-direction: column;
+}
+
+.tear-ticket--vertical .tear-ticket-seam {
+  height: calc(var(--hole-size) + 10px);
+  flex-direction: row;
+}
+
+.tear-ticket-seam::before,
+.tear-ticket-seam::after {
+  position: absolute;
+  z-index: 2;
+  width: calc(var(--hole-size) + var(--notch-size) * 2);
+  height: calc(var(--hole-size) + var(--notch-size) * 2);
+  border-radius: 50%;
+  background: var(--ticket-background);
+  content: "";
+}
+
+.tear-ticket--horizontal .tear-ticket-seam::before {
+  top: calc(var(--notch-size) * -1);
+}
+
+.tear-ticket--horizontal .tear-ticket-seam::after {
+  bottom: calc(var(--notch-size) * -1);
+}
+
+.tear-ticket--vertical .tear-ticket-seam::before {
+  left: calc(var(--notch-size) * -1);
+}
+
+.tear-ticket--vertical .tear-ticket-seam::after {
+  right: calc(var(--notch-size) * -1);
+}
+
+.tear-ticket-seam span {
+  width: var(--hole-size);
+  height: var(--hole-size);
+  flex: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,.35);
+}
+
+.tear-ticket-stub {
+  display: flex;
+  flex: 0 0 var(--stub-size);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--ticket-background);
+  color: var(--ticket-color);
+  text-align: center;
+}
+
+.tear-ticket-stub h3 {
+  margin-bottom: 10px;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.tear-ticket-stub p {
+  font-size: 12px;
+  line-height: 1.5;
+  opacity: .76;
+}
+
+.tear-ticket-stub span {
+  display: block;
+  margin-top: 16px;
+  font-size: 11px;
+  letter-spacing: .12em;
+  opacity: .66;
+}
+
+.tear-ticket-used {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(20,20,24,.75);
+  color: white;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  animation: tear-ticket-used-in .45s ease both;
+}
+
+.tear-ticket.is-torn .tear-ticket-image {
+  transform: rotate(calc(var(--tear-angle) * -1)) translateX(calc(var(--tear-stretch) * -1));
+}
+
+.tear-ticket.is-torn .tear-ticket-stub {
+  transform: rotate(var(--tear-angle)) translateX(var(--tear-stretch));
+  transition: transform var(--tear-resistance) ease;
+}
+
+.tear-ticket.is-torn .tear-ticket-seam {
+  opacity: .35;
+}
+
+@keyframes tear-ticket-used-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .tear-ticket {
+    height: min(var(--ticket-height), 220px);
+  }
+
+  .tear-ticket-stub {
+    padding: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tear-ticket,
+  .tear-ticket-title,
+  .tear-ticket-image,
+  .tear-ticket-stub,
+  .tear-ticket-used {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}

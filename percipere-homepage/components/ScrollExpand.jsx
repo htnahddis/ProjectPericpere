@@ -15,6 +15,7 @@ const ScrollExpand = ({
   src = '',
   mediaType = 'image',
   poster = '',
+  solidColor = '#ffffff',
   alt = '',
   title = '',
   scrollHint = '',
@@ -190,7 +191,14 @@ const ScrollExpand = ({
   }, [applyProgress, useWindowScroll]);
 
   const media =
-    mediaType === 'video' ? (
+    mediaType === 'solid' ? (
+      <div
+        ref={mediaRef}
+        className="scroll-expand__media scroll-expand__media--solid"
+        style={{ background: solidColor }}
+        aria-hidden="true"
+      />
+    ) : mediaType === 'video' ? (
       <video
         ref={mediaRef}
         className="scroll-expand__media"

@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import Features10 from "@/components/Features10";
+import EcosystemOrbit from "@/components/EcosystemOrbit";
 import HeroBackground from "@/components/HeroBackground";
 import ProductCard from "@/components/ProductCard";
 import PrimaryCta from "@/components/PrimaryCta";
-import SectionReveal from "@/components/SectionReveal";
+import SectionMotion from "@/components/SectionMotion";
 import TextReveal from "@/components/TextReveal";
 import StatementReveal from "@/components/StatementReveal";
 import StatementBackground from "@/components/StatementBackground";
@@ -16,11 +16,11 @@ import Magnet from "@/components/Magnet";
 import { PRODUCTS, SAP_PHASES, DEMO_HREF } from "@/lib/data";
 
 const BENTO_ORDER: { name: string; size: "feature" | "wide" | "default" }[] = [
-  { name: "FUTUROOT", size: "feature" },
+  { name: "FUTUROOT", size: "default" },
   { name: "PerciXpert", size: "default" },
   { name: "PerciServe", size: "default" },
-  { name: "PerciHub", size: "wide" },
-  { name: "PerciSuite", size: "wide" },
+  { name: "PerciHub", size: "default" },
+  { name: "PerciSuite", size: "default" },
 ];
 
 export default function Home() {
@@ -30,7 +30,6 @@ export default function Home() {
     <>
       <Nav />
       <main>
-        {/* 1. Hero — full-bleed WebThreads (no card) */}
         <section className="hero" aria-labelledby="hero-title">
           <HeroBackground />
           <div className="wrap hero-copy">
@@ -72,47 +71,63 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 2. The Ecosystem */}
-        <SectionReveal as="section" className="full-section wrap ecosystem features10" id="ecosystem" aria-labelledby="ecosystem-title" early>
-          <div className="features10-copy">
-            <p className="eyebrow left">The Ecosystem</p>
-            <TextReveal as="h2" className="h2" lines={[{ text: "One connected system" }]} />
-            <span id="ecosystem-title" className="sr-only">One connected system</span>
-            <BlurText
-              className="lede left"
-              text="FUTUROOT sits at the centre as the process intelligence layer that gives every suite shared enterprise context."
-              delay={55}
-              animateBy="words"
-              direction="bottom"
-              effect="focus"
-              blur={6}
-              distance={12}
-              stepDuration={0.24}
-              trigger="view"
-            />
-          </div>
-          <Features10 />
-        </SectionReveal>
+        <section className="full-section ecosystem-orbit" id="ecosystem" aria-labelledby="ecosystem-title">
+          <div className="wrap ecosystem-orbit-frame">
+            <SectionMotion>
+              <div className="ecosystem-orbit-head">
+                <p className="eyebrow left">One Connected System</p>
+                <TextReveal
+                  as="h2"
+                  className="h2"
+                  lines={[
+                    { text: "One ecosystem." },
+                    { text: "Connected intelligence.", accent: "Connected" },
+                  ]}
+                />
+                <span id="ecosystem-title" className="sr-only">One ecosystem. Connected intelligence.</span>
+              </div>
 
-        {/* Bridge statement — white + Hyperspeed */}
-        <SectionReveal as="section" className="full-section statement-band" aria-labelledby="statement-title" early>
+              <div className="ecosystem-orbit-visual" aria-label="Connected PerciVerse products orbiting Percipere.ai">
+                <EcosystemOrbit />
+              </div>
+
+              <div className="ecosystem-orbit-support">
+                <BlurText
+                  className="lede left ecosystem-orbit-lede"
+                  text="PerciXpert, PerciServe and PerciBot work together through shared process intelligence—so context stays continuous across your SAP journey."
+                  delay={55}
+                  animateBy="words"
+                  direction="bottom"
+                  effect="focus"
+                  blur={6}
+                  distance={12}
+                  stepDuration={0.24}
+                  trigger="view"
+                />
+              </div>
+            </SectionMotion>
+          </div>
+        </section>
+
+        <section className="full-section statement-band" aria-labelledby="statement-title">
           <span id="statement-title" className="sr-only">
             One PerciVerse. Clearer decisions. Connect implementation, operations, and support through shared process intelligence across your SAP journey.
           </span>
           <div className="statement">
             <StatementBackground />
             <div className="wrap statement-inner">
-              <StatementReveal />
+              <SectionMotion staggerChildren={false}>
+                <StatementReveal />
+              </SectionMotion>
             </div>
           </div>
-        </SectionReveal>
+        </section>
 
-        {/* 3. Product Suites — ScrollExpand + bento */}
         <section className="suites-section" id="suites" aria-labelledby="suites-title">
           <span id="suites-title" className="sr-only">The Product Suites</span>
           <SuitesScrollExpand
             browseContent={
-              <div className="suites-bento">
+              <SectionMotion>
                 <div className="row-head">
                   <h2 className="h2">Browse the suites</h2>
                   <a href="#next-steps" className="ulink">Talk through fit ↗</a>
@@ -125,52 +140,40 @@ export default function Home() {
                     return <ProductCard key={product.name} product={product} size={slot.size} />;
                   })}
                 </div>
-              </div>
+              </SectionMotion>
             }
           />
         </section>
 
-        {/* 4. SAP Transformation — always visible heading + PhaseRail; gallery enhances */}
-        <SectionReveal as="section" className="full-section sap-transform" id="transformation" aria-labelledby="transform-title" early>
-          <div className="wrap">
-            <div className="row-head compact">
-              <p className="eyebrow left">SAP Activate</p>
+        <section className="full-section sap-transform" id="transformation" aria-labelledby="transform-title">
+          <SectionMotion staggerChildren={false}>
+            <SapPhaseGallery phases={SAP_PHASES} />
+          </SectionMotion>
+        </section>
+
+        <section className="full-section wrap value-next" id="next-steps" aria-labelledby="next-title">
+          <SectionMotion>
+            <div className="final">
+              <p className="eyebrow">Value & next steps</p>
               <TextReveal
                 as="h2"
-                className="h2"
-                lines={[{ text: "How the ecosystem supports SAP transformation" }]}
+                className="h1 sm"
+                lines={[
+                  { text: "Ready to see PerciVerse", accent: "PerciVerse" },
+                  { text: "in your landscape?" },
+                ]}
               />
-              <span id="transform-title" className="sr-only">How the ecosystem supports SAP transformation</span>
+              <span id="next-title" className="sr-only">Ready to see PerciVerse in your landscape?</span>
+              <p className="lede">
+                Talk with the team about how the suites and FUTUROOT fit your SAP transformation.
+              </p>
+              <div className="ctas">
+                <PrimaryCta />
+                <a href="#suites" className="btn btn-line">Review the suites</a>
+              </div>
             </div>
-            <p className="section-lede">
-              Across SAP Activate phases, PerciVerse keeps context continuous from discovery through realization.
-            </p>
-          </div>
-          <SapPhaseGallery phases={SAP_PHASES} />
-        </SectionReveal>
-
-        {/* 5. Value & Next Steps */}
-        <SectionReveal as="section" className="full-section wrap value-next" id="next-steps" aria-labelledby="next-title" early>
-          <div className="final">
-            <p className="eyebrow">Value & next steps</p>
-            <TextReveal
-              as="h2"
-              className="h1 sm"
-              lines={[
-                { text: "Ready to see PerciVerse", accent: "PerciVerse" },
-                { text: "in your landscape?" },
-              ]}
-            />
-            <span id="next-title" className="sr-only">Ready to see PerciVerse in your landscape?</span>
-            <p className="lede">
-              Talk with the team about how the suites and FUTUROOT fit your SAP transformation.
-            </p>
-            <div className="ctas">
-              <PrimaryCta />
-              <a href="#suites" className="btn btn-line">Review the suites</a>
-            </div>
-          </div>
-        </SectionReveal>
+          </SectionMotion>
+        </section>
       </main>
       <Footer />
     </>

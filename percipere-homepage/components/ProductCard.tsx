@@ -7,6 +7,7 @@ import SpotlightCard from "@/components/SpotlightCard";
 
 type Product = {
   name: string;
+  slug: string;
   tag: string;
   href: string;
   video: string;
@@ -25,7 +26,7 @@ export default function ProductCard({
 }) {
   return (
     <article
-      id={`product-${product.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+      id={`product-${product.slug}`}
       className={`bento-cell bento-${size}`}
     >
       <ProductTilt>
